@@ -1,0 +1,402 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.models\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|solutionrelative:salesapp.models\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.models\\dtos\\categorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|solutionrelative:salesapp.models\\dtos\\categorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.bll\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.api\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.bll\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.bll\\services\\iproductservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\iproductservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.bll\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.bll\\services\\igenericservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\igenericservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.dal\\unitofwork\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|solutionrelative:salesapp.dal\\unitofwork\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.dal\\unitofwork\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|solutionrelative:salesapp.dal\\unitofwork\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.dal\\repositories\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|solutionrelative:salesapp.dal\\repositories\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.dal\\repositories\\iproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|solutionrelative:salesapp.dal\\repositories\\iproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|solutionrelative:salesapp.dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|solutionrelative:salesapp.dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.dal\\data\\salesappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59131CD1-2754-4370-BAFF-7126B4AC12EE}|SalesApp.DAL\\SalesApp.DAL.csproj|solutionrelative:salesapp.dal\\data\\salesappdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.models\\dtos\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|solutionrelative:salesapp.models\\dtos\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|c:\\users\\admin\\desktop\\asm_prm\\salesapp.models\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|solutionrelative:salesapp.models\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "SalesApp.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Properties\\launchSettings.json*",
+              "RelativeToolTip": "SalesApp.API\\Properties\\launchSettings.json*",
+              "ViewState": "AgIAAAIAAAAAAAAAAADwvwYAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-20T16:17:17.788Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Program.cs",
+              "RelativeDocumentMoniker": "SalesApp.API\\Program.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Program.cs",
+              "RelativeToolTip": "SalesApp.API\\Program.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAABsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:09:11.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\appsettings.json",
+              "RelativeDocumentMoniker": "SalesApp.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\appsettings.json",
+              "RelativeToolTip": "SalesApp.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-20T16:09:00.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\LoginDto.cs",
+              "RelativeDocumentMoniker": "SalesApp.Models\\DTOs\\LoginDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\LoginDto.cs",
+              "RelativeToolTip": "SalesApp.Models\\DTOs\\LoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:08:46.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CategoryDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\CategoryDto.cs",
+              "RelativeDocumentMoniker": "SalesApp.Models\\DTOs\\CategoryDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\CategoryDto.cs",
+              "RelativeToolTip": "SalesApp.Models\\DTOs\\CategoryDto.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:08:32.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "SalesApp.API\\Controllers\\ProductsController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Controllers\\ProductsController.cs",
+              "RelativeToolTip": "SalesApp.API\\Controllers\\ProductsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:07:56.812Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "SalesApp.API\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.API\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "SalesApp.API\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAswI0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:07:08.755Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:05:54.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\ProductService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\ProductService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\ProductService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\ProductService.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAA8wEkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:05:23.202Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IProductService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\IProductService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\IProductService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\IProductService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\IProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:05:09.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\UserService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\UserService.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAuwGwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:04:37.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\IUserService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\IUserService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\IUserService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:04:23.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IGenericService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\IGenericService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\IGenericService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.BLL\\Services\\IGenericService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\IGenericService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:04:01.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\UnitOfWork\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "SalesApp.DAL\\UnitOfWork\\UnitOfWork.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\UnitOfWork\\UnitOfWork.cs",
+              "RelativeToolTip": "SalesApp.DAL\\UnitOfWork\\UnitOfWork.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAAAEYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:03:31.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "SalesApp.DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "RelativeToolTip": "SalesApp.DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:03:17.517Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ProductRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\ProductRepository.cs",
+              "RelativeDocumentMoniker": "SalesApp.DAL\\Repositories\\ProductRepository.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\ProductRepository.cs",
+              "RelativeToolTip": "SalesApp.DAL\\Repositories\\ProductRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:02:47.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IProductRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\IProductRepository.cs",
+              "RelativeDocumentMoniker": "SalesApp.DAL\\Repositories\\IProductRepository.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\IProductRepository.cs",
+              "RelativeToolTip": "SalesApp.DAL\\Repositories\\IProductRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:02:29.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "SalesApp.DAL\\Repositories\\GenericRepository.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "SalesApp.DAL\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAwDQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:02:08.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "SalesApp.DAL\\Repositories\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Repositories\\IGenericRepository.cs",
+              "RelativeToolTip": "SalesApp.DAL\\Repositories\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:01:52.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SalesAppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Data\\SalesAppDbContext.cs",
+              "RelativeDocumentMoniker": "SalesApp.DAL\\Data\\SalesAppDbContext.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.DAL\\Data\\SalesAppDbContext.cs",
+              "RelativeToolTip": "SalesApp.DAL\\Data\\SalesAppDbContext.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA7wCQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:01:14.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ProductDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\ProductDto.cs",
+              "RelativeDocumentMoniker": "SalesApp.Models\\DTOs\\ProductDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\ProductDto.cs",
+              "RelativeToolTip": "SalesApp.Models\\DTOs\\ProductDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:00:41.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\UserDto.cs",
+              "RelativeDocumentMoniker": "SalesApp.Models\\DTOs\\UserDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ASM_PRM\\SalesApp.Models\\DTOs\\UserDto.cs",
+              "RelativeToolTip": "SalesApp.Models\\DTOs\\UserDto.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAwwB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T16:00:23.149Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
