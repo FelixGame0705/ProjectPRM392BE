@@ -23,6 +23,12 @@ namespace SalesApp.BLL.Mapping
             // Category mappings
             CreateMap<Category, CategoryDto>();
             CreateMap<CreateCategoryDto, Category>();
+
+            // StoreLocation mappings
+            CreateMap<StoreLocation, StoreLocationDto>();
+            CreateMap<CreateStoreLocationDto, StoreLocation>();
+            CreateMap<UpdateStoreLocationDto, StoreLocation>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }
