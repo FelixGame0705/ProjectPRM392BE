@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SalesApp.BLL.Mapping;
 using SalesApp.BLL.Services;
 using SalesApp.DAL.Data;
+using SalesApp.DAL.Repositories;
 using SalesApp.DAL.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<SalesAppDbContext>(options =>
 
 // Register repositories and unit of work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 // Register services
 builder.Services.AddScoped<IUserService, UserService>();
@@ -23,6 +25,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>
 {

@@ -37,7 +37,7 @@ public class NotificationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateNotification(NotificationDto notification)
+    public async Task<ActionResult> CreateNotification(CreateNotificationDto notification)
     {
         if (notification == null)
         {
@@ -47,8 +47,20 @@ public class NotificationController : ControllerBase
         {
             return BadRequest("Notification message and UserID cannot be empty.");
         }
+
+        // Create the notification
         await _notificationService.CreateNotificationAsync(notification);
-        return CreatedAtAction(nameof(GetNotificationById), new { id = notification.NotificationID }, notification);
+
+        // Retrieve the created notification to get its ID
+        var createdNotification = await _notificationService.GetNotificationByIdAsync(notification.UserID);
+
+        if (createdNotification == null)
+        {
+            return BadRequest("Failed to create notification.");
+        }
+
+        // Use the ID from the created notification
+        return CreatedAtAction(nameof(GetNotificationById), new { id = createdNotification.NotificationID }, createdNotification);
     }
 
     [HttpPut("{id}")]
