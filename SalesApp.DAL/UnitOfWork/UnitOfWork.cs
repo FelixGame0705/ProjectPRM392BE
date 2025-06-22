@@ -16,9 +16,11 @@ namespace SalesApp.DAL.UnitOfWork
             _context = context;
             _repositories = new Dictionary<Type, object>();
             ProductRepository = new ProductRepository(_context);
+            StoreLocationRepository = new StoreLocationRepository(_context);
         }
 
         public IProductRepository ProductRepository { get; private set; }
+        public IStoreLocationRepository StoreLocationRepository { get; private set; }
 
         public IGenericRepository<T> Repository<T>() where T : class
         {

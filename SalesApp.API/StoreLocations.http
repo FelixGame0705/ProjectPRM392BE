@@ -1,0 +1,80 @@
+### Store Locations API Tests for Google Maps Integration
+
+### Get all store locations
+GET {{host}}/api/storelocations
+Accept: application/json
+
+### Get all store locations with user location (for distance calculation)
+GET {{host}}/api/storelocations?userLatitude=10.8231&userLongitude=106.6297
+Accept: application/json
+
+### Get specific store location by ID
+GET {{host}}/api/storelocations/1
+Accept: application/json
+
+### Get nearest store location (query params)
+GET {{host}}/api/storelocations/nearest?userLatitude=10.8231&userLongitude=106.6297
+Accept: application/json
+
+### Get nearest store locations (POST with detailed request)
+POST {{host}}/api/storelocations/nearest
+Content-Type: application/json
+
+{
+  "userLatitude": 10.8231,
+  "userLongitude": 106.6297,
+  "limit": 5,
+  "maxDistanceKm": 20
+}
+
+### Create a new store location (Ho Chi Minh City - District 1)
+POST {{host}}/api/storelocations
+Content-Type: application/json
+
+{
+  "latitude": 10.8231,
+  "longitude": 106.6297,
+  "address": "123 Nguyen Hue Boulevard, District 1, Ho Chi Minh City, Vietnam"
+}
+
+### Create another store location (Ho Chi Minh City - District 7)
+POST {{host}}/api/storelocations
+Content-Type: application/json
+
+{
+  "latitude": 10.7379,
+  "longitude": 106.7218,
+  "address": "456 Nguyen Thi Thap, District 7, Ho Chi Minh City, Vietnam"
+}
+
+### Create store location (Hanoi)
+POST {{host}}/api/storelocations
+Content-Type: application/json
+
+{
+  "latitude": 21.0285,
+  "longitude": 105.8542,
+  "address": "789 Hoan Kiem Lake, Hanoi, Vietnam"
+}
+
+### Update store location
+PUT {{host}}/api/storelocations/1
+Content-Type: application/json
+
+{
+  "address": "123 Updated Address, District 1, Ho Chi Minh City, Vietnam"
+}
+
+### Get directions URL for Google Maps
+GET {{host}}/api/storelocations/1/directions?userLatitude=10.8200&userLongitude=106.6300
+Accept: application/json
+
+### Delete store location
+DELETE {{host}}/api/storelocations/1
+
+### Host configuration (add this to your http-client.env.json)
+# {
+#   "dev": {
+#     "host": "https://localhost:7000"
+#   }
+# } 
