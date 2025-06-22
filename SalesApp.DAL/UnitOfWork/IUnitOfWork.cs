@@ -6,6 +6,7 @@ namespace SalesApp.DAL.UnitOfWork
     {
         IGenericRepository<T> Repository<T>() where T : class;
         IProductRepository ProductRepository { get; }
+        IStoreLocationRepository StoreLocationRepository { get; }
         Task<int> SaveChangesAsync();
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();

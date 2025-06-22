@@ -20,6 +20,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Register services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IStoreLocationService, StoreLocationService>();
 
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>
 {
