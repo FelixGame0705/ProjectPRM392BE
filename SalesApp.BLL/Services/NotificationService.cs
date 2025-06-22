@@ -45,8 +45,20 @@ namespace SalesApp.BLL.Services
             return _mapper.Map<NotificationDto>(await _notificationRepository.GetByIdAsync(id));
         }
 
-        public async Task CreateNotificationAsync(NotificationDto notification)
+        public async Task CreateNotificationAsync(CreateNotificationDto notification)
         {
+            if (notification == null)
+            {
+                throw new ArgumentNullException(nameof(notification), "Notification cannot be null.");
+            }
+            if (string.IsNullOrWhiteSpace(notification.Message))
+            {
+                throw new ArgumentException("Notification message cannot be null or empty.", nameof(notification.Message));
+            }
+            if (notification.UserID <= 0)
+            {
+                throw new ArgumentException("User ID must be greater than zero.", nameof(notification.UserID));
+            }
             var entity = _mapper.Map<Notification>(notification);
             await _notificationRepository.AddAsync(entity);
             await _unitOfWork.SaveChangesAsync();

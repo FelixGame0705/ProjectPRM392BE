@@ -7,7 +7,7 @@ public interface INotificationService
 {
     Task<IEnumerable<NotificationDto>> GetAllNotificationsAsync();
     Task<NotificationDto?> GetNotificationByIdAsync(int id);
-    Task CreateNotificationAsync(NotificationDto notification);
+    Task CreateNotificationAsync(CreateNotificationDto notification);
     Task UpdateNotificationAsync(int id);
     Task DeleteNotificationAsync(int id);
 }
