@@ -23,6 +23,17 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IPaymentGatewayService, PaymentGatewayService>();
+builder.Services.AddScoped<IBillingService, BillingService>();
+builder.Services.AddScoped<ITransactionMappingService, TransactionMappingService>();
+
+// Register memory cache for billing details and transaction mapping
+builder.Services.AddMemoryCache();
+
+// Register HttpClient for payment gateway services
+builder.Services.AddHttpClient();
 
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>
 {
