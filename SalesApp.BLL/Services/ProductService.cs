@@ -31,10 +31,8 @@ namespace SalesApp.BLL.Services
         public async Task<ProductDto> CreateAsync(CreateProductDto createDto)
         {
             var product = _mapper.Map<Product>(createDto);
-
             await _unitOfWork.Repository<Product>().AddAsync(product);
             await _unitOfWork.SaveChangesAsync();
-
             return _mapper.Map<ProductDto>(product);
         }
 
@@ -46,7 +44,6 @@ namespace SalesApp.BLL.Services
             _mapper.Map(updateDto, product);
             _unitOfWork.Repository<Product>().Update(product);
             await _unitOfWork.SaveChangesAsync();
-
             return _mapper.Map<ProductDto>(product);
         }
 
@@ -69,6 +66,56 @@ namespace SalesApp.BLL.Services
         {
             var products = await _unitOfWork.ProductRepository.GetProductsByCategoryAsync(categoryId);
             return _mapper.Map<IEnumerable<ProductDto>>(products);
+        }
+
+        public async Task<IEnumerable<ProductDto>> SearchProductsAsync(string searchTerm)
+        {
+            var products = await _unitOfWork.Repository<Product>().FindAsync(p =>
+                p.ProductName.Contains(searchTerm) ||
+                (p.BriefDescription != null && p.BriefDescription.Contains(searchTerm)) ||
+                (p.FullDescription != null && p.FullDescription.Contains(searchTerm)));
+
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
+        }
+
+        public async Task<IEnumerable<ProductDto>> GetProductsByPriceRangeAsync(decimal minPrice, decimal maxPrice)
+        {
+            var products = await _unitOfWork.Repository<Product>().FindAsync(p =>
+                p.Price >= minPrice && p.Price <= maxPrice);
+
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
+        }
+
+        public async Task<IEnumerable<ProductDto>> GetProductsFilteredAsync(int? categoryId, decimal? minPrice, decimal? maxPrice, string? searchTerm)
+        {
+            var products = await _unitOfWork.ProductRepository.GetProductsWithCategoryAsync();
+
+            var filteredProducts = products.AsQueryable();
+
+            if (categoryId.HasValue)
+            {
+                filteredProducts = filteredProducts.Where(p => p.CategoryID == categoryId.Value);
+            }
+
+            if (minPrice.HasValue)
+            {
+                filteredProducts = filteredProducts.Where(p => p.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                filteredProducts = filteredProducts.Where(p => p.Price <= maxPrice.Value);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                filteredProducts = filteredProducts.Where(p =>
+                    p.ProductName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (p.BriefDescription != null && p.BriefDescription.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                    (p.FullDescription != null && p.FullDescription.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            return _mapper.Map<IEnumerable<ProductDto>>(filteredProducts.ToList());
         }
     }
 }
