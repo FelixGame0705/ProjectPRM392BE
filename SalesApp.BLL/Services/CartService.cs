@@ -92,5 +92,89 @@ namespace SalesApp.BLL.Services
             await _unitOfWork.SaveChangesAsync();
             return true;
         }
+        public async Task<IEnumerable<CartDto>> GetAllCartsWithItemsAsync()
+        {
+            var carts = await _unitOfWork.Repository<Cart>().GetAllAsync();
+            var cartDtos = new List<CartDto>();
+
+            foreach (var cart in carts)
+            {
+                var cartDto = _mapper.Map<CartDto>(cart);
+                var cartItems = await _unitOfWork.Repository<CartItem>().FindAsync(ci => ci.CartID == cart.CartID);
+
+                // Map cart items with product details
+                var cartItemDtos = new List<CartItemDto>();
+                foreach (var item in cartItems)
+                {
+                    var product = await _unitOfWork.Repository<Product>().GetByIdAsync(item.ProductID.Value);
+                    var itemDto = _mapper.Map<CartItemDto>(item);
+                    if (product != null)
+                    {
+                        itemDto.ProductName = product.ProductName;
+                        itemDto.ProductImageURL = product.ImageURL;
+                    }
+                    cartItemDtos.Add(itemDto);
+                }
+
+                cartDto.CartItems = cartItemDtos;
+                cartDtos.Add(cartDto);
+            }
+
+            return cartDtos;
+        }
+
+        public async Task<CartDto?> GetCartWithItemsByIdAsync(int id)
+        {
+            var cart = await _unitOfWork.Repository<Cart>().GetByIdAsync(id);
+            if (cart == null) return null;
+
+            var cartDto = _mapper.Map<CartDto>(cart);
+            var cartItems = await _unitOfWork.Repository<CartItem>().FindAsync(ci => ci.CartID == id);
+
+            var cartItemDtos = new List<CartItemDto>();
+            foreach (var item in cartItems)
+            {
+                var product = await _unitOfWork.Repository<Product>().GetByIdAsync(item.ProductID.Value);
+                var itemDto = _mapper.Map<CartItemDto>(item);
+                if (product != null)
+                {
+                    itemDto.ProductName = product.ProductName;
+                    itemDto.ProductImageURL = product.ImageURL;
+                }
+                cartItemDtos.Add(itemDto);
+            }
+
+            cartDto.CartItems = cartItemDtos;
+
+            if (cart.UserID.HasValue)
+            {
+                var user = await _unitOfWork.Repository<User>().GetByIdAsync(cart.UserID.Value);
+                if (user != null)
+                {
+                    cartDto.UserName = user.Username;
+                }
+            }
+
+            return cartDto;
+        }
+
+        public async Task<CartDto?> UpdateCartStatusAsync(int id, string status)
+        {
+            var cart = await _unitOfWork.Repository<Cart>().GetByIdAsync(id);
+            if (cart == null) return null;
+
+            // Validate status
+            var validStatuses = new[] { "active", "done", "cancelled", "pending" };
+            if (!validStatuses.Contains(status.ToLower()))
+            {
+                throw new ArgumentException($"Invalid status. Valid statuses are: {string.Join(", ", validStatuses)}");
+            }
+
+            cart.Status = status;
+            _unitOfWork.Repository<Cart>().Update(cart);
+            await _unitOfWork.SaveChangesAsync();
+
+            return _mapper.Map<CartDto>(cart);
+        }
     }
 }

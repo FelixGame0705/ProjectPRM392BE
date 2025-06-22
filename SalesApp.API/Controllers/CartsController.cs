@@ -29,6 +29,21 @@ namespace SalesApp.Controllers
             }
         }
 
+        // New endpoint: Get all carts with items
+        [HttpGet("with-items")]
+        public async Task<ActionResult<IEnumerable<CartDto>>> GetAllCartsWithItems()
+        {
+            try
+            {
+                var carts = await _cartService.GetAllCartsWithItemsAsync();
+                return Ok(carts);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<CartDto>> GetCart(int id)
         {
@@ -46,12 +61,13 @@ namespace SalesApp.Controllers
             }
         }
 
+        // Updated endpoint: Get cart by ID with items and full product details
         [HttpGet("{id}/with-items")]
         public async Task<ActionResult<CartDto>> GetCartWithItems(int id)
         {
             try
             {
-                var cart = await _cartService.GetCartWithItemsAsync(id);
+                var cart = await _cartService.GetCartWithItemsByIdAsync(id);
                 if (cart == null)
                     return NotFound($"Cart with ID {id} not found.");
 
@@ -114,6 +130,49 @@ namespace SalesApp.Controllers
             }
         }
 
+        // New endpoint: Update cart status
+        [HttpPut("{id}/status")]
+        public async Task<ActionResult<CartDto>> UpdateCartStatus(int id, [FromBody] UpdateCartStatusDto statusDto)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(statusDto.Status))
+                    return BadRequest("Status is required.");
+
+                var updatedCart = await _cartService.UpdateCartStatusAsync(id, statusDto.Status);
+                if (updatedCart == null)
+                    return NotFound($"Cart with ID {id} not found.");
+
+                return Ok(updatedCart);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        // Convenience endpoint: Mark cart as done
+        [HttpPut("{id}/mark-done")]
+        public async Task<ActionResult<CartDto>> MarkCartAsDone(int id)
+        {
+            try
+            {
+                var updatedCart = await _cartService.UpdateCartStatusAsync(id, "done");
+                if (updatedCart == null)
+                    return NotFound($"Cart with ID {id} not found.");
+
+                return Ok(updatedCart);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpPut("{id}/update-total")]
         public async Task<IActionResult> UpdateCartTotal(int id)
         {
@@ -161,5 +220,11 @@ namespace SalesApp.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+    }
+
+    // DTO for updating cart status
+    public class UpdateCartStatusDto
+    {
+        public string Status { get; set; } = string.Empty;
     }
 }

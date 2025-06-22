@@ -38,8 +38,13 @@ namespace SalesApp.BLL.Mapping
             CreateMap<CartItem, CartItemDto>()
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.ProductName : null))
                 .ForMember(dest => dest.ProductImageURL, opt => opt.MapFrom(src => src.Product != null ? src.Product.ImageURL : null));
-            CreateMap<CreateCartItemDto, CartItem>();
+
+            CreateMap<CreateCartItemDto, CartItem>()
+                .ForMember(dest => dest.Price, opt => opt.Ignore()) // Price will be set from Product
+                .ForMember(dest => dest.CartID, opt => opt.Ignore()); // CartID will be set in service
+
             CreateMap<UpdateCartItemDto, CartItem>()
+                .ForMember(dest => dest.Price, opt => opt.Ignore()) // Price will be updated from Product if ProductID changes
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }

@@ -3,6 +3,38 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.api\\controllers\\cartscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\controllers\\cartscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.bll\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.bll\\services\\icartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\icartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.bll\\services\\cartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\services\\cartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.bll\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B04CFAE-7989-4BA1-899D-A4D7E7E8307C}|SalesApp.BLL\\SalesApp.BLL.csproj|solutionrelative:salesapp.bll\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.api\\controllers\\cartitemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\controllers\\cartitemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.models\\dtos\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|solutionrelative:salesapp.models\\dtos\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.models\\dtos\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C590F2B-72B2-4CC6-A931-D663BF75FA84}|SalesApp.Models\\SalesApp.Models.csproj|solutionrelative:salesapp.models\\dtos\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|c:\\users\\admin\\desktop\\projectprm392be\\salesapp.api\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2DB202F2-909F-49C1-9161-FF13BF4BE29B}|SalesApp.API\\SalesApp.API.csproj|solutionrelative:salesapp.api\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -63,6 +95,110 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "CartsController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Controllers\\CartsController.cs",
+              "RelativeDocumentMoniker": "SalesApp.API\\Controllers\\CartsController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Controllers\\CartsController.cs",
+              "RelativeToolTip": "SalesApp.API\\Controllers\\CartsController.cs",
+              "ViewState": "AgIAAMsAAAAAAAAAAADwv+UAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:33:58.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Mapping\\MappingProfile.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAIwDIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:22:05.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CartItemsController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Controllers\\CartItemsController.cs",
+              "RelativeDocumentMoniker": "SalesApp.API\\Controllers\\CartItemsController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Controllers\\CartItemsController.cs",
+              "RelativeToolTip": "SalesApp.API\\Controllers\\CartItemsController.cs",
+              "ViewState": "AgIAAL0AAAAAAAAAAADwv9cAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:21:56.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CartItemDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.Models\\DTOs\\CartItemDto.cs",
+              "RelativeDocumentMoniker": "SalesApp.Models\\DTOs\\CartItemDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.Models\\DTOs\\CartItemDto.cs",
+              "RelativeToolTip": "SalesApp.Models\\DTOs\\CartItemDto.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAA0wCYAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:21:34.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CartDto.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.Models\\DTOs\\CartDto.cs",
+              "RelativeDocumentMoniker": "SalesApp.Models\\DTOs\\CartDto.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.Models\\DTOs\\CartDto.cs",
+              "RelativeToolTip": "SalesApp.Models\\DTOs\\CartDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:21:34.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CartItemService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Services\\CartItemService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\CartItemService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Services\\CartItemService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\CartItemService.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAcwCYAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:21:18.021Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ICartService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Services\\ICartService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\ICartService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Services\\ICartService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\ICartService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:21:10.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CartService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Services\\CartService.cs",
+              "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\CartService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Services\\CartService.cs",
+              "RelativeToolTip": "SalesApp.BLL\\Services\\CartService.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAwIUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T09:18:17.708Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "CategoriesController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Controllers\\CategoriesController.cs",
               "RelativeDocumentMoniker": "SalesApp.API\\Controllers\\CategoriesController.cs",
@@ -75,7 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "SalesApp.API\\Controllers\\UsersController.cs",
@@ -83,12 +219,11 @@
               "RelativeToolTip": "SalesApp.API\\Controllers\\UsersController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:41:08.368Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:41:08.368Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "ProductsController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Controllers\\ProductsController.cs",
               "RelativeDocumentMoniker": "SalesApp.API\\Controllers\\ProductsController.cs",
@@ -101,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
               "Title": "ProductService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.BLL\\Services\\ProductService.cs",
               "RelativeDocumentMoniker": "SalesApp.BLL\\Services\\ProductService.cs",
@@ -109,12 +244,11 @@
               "RelativeToolTip": "SalesApp.BLL\\Services\\ProductService.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAvwCQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:27:07.852Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:27:07.852Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 13,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.DAL\\UnitOfWork\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "SalesApp.DAL\\UnitOfWork\\UnitOfWork.cs",
@@ -122,12 +256,11 @@
               "RelativeToolTip": "SalesApp.DAL\\UnitOfWork\\UnitOfWork.cs",
               "ViewState": "AgIAABgAAAAAAAAAAADgvyUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:26:58.065Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:26:58.065Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 14,
               "Title": "GenericRepository.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.DAL\\Repositories\\GenericRepository.cs",
               "RelativeDocumentMoniker": "SalesApp.DAL\\Repositories\\GenericRepository.cs",
@@ -135,12 +268,11 @@
               "RelativeToolTip": "SalesApp.DAL\\Repositories\\GenericRepository.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAArwCMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:26:51.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:26:51.421Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 17,
               "Title": "IGenericRepository.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.DAL\\Repositories\\IGenericRepository.cs",
               "RelativeDocumentMoniker": "SalesApp.DAL\\Repositories\\IGenericRepository.cs",
@@ -148,12 +280,11 @@
               "RelativeToolTip": "SalesApp.DAL\\Repositories\\IGenericRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:26:49.87Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:26:49.87Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 11,
               "Title": "ProductRepository.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.DAL\\Repositories\\ProductRepository.cs",
               "RelativeDocumentMoniker": "SalesApp.DAL\\Repositories\\ProductRepository.cs",
@@ -161,12 +292,11 @@
               "RelativeToolTip": "SalesApp.DAL\\Repositories\\ProductRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:26:35.543Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:26:35.543Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 15,
               "Title": "ProductDto.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.Models\\DTOs\\ProductDto.cs",
               "RelativeDocumentMoniker": "SalesApp.Models\\DTOs\\ProductDto.cs",
@@ -174,12 +304,11 @@
               "RelativeToolTip": "SalesApp.Models\\DTOs\\ProductDto.cs",
               "ViewState": "AgIAACIAAAAAAAAAAAAIwD4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:18:51.021Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:18:51.021Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 16,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\ProjectPRM392BE\\SalesApp.API\\Program.cs",
               "RelativeDocumentMoniker": "SalesApp.API\\Program.cs",
@@ -187,8 +316,7 @@
               "RelativeToolTip": "SalesApp.API\\Program.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAUwEEAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T08:18:26.944Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T08:18:26.944Z"
             }
           ]
         }

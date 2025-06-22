@@ -68,8 +68,49 @@ namespace SalesApp.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
+                if (!createCartItemDto.UserID.HasValue)
+                    return BadRequest("UserID is required");
+
+                if (!createCartItemDto.ProductID.HasValue)
+                    return BadRequest("ProductID is required");
+
                 var cartItem = await _cartItemService.CreateAsync(createCartItemDto);
                 return CreatedAtAction(nameof(GetCartItem), new { id = cartItem.CartItemID }, cartItem);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpPost("add-to-cart")]
+        public async Task<ActionResult<CartItemDto>> AddToCart(
+            [FromQuery] int userId,
+            [FromQuery] int productId,
+            [FromQuery] int quantity = 1)
+        {
+            try
+            {
+                if (userId <= 0 || productId <= 0 || quantity <= 0)
+                    return BadRequest("Invalid parameters. UserID, ProductID, and Quantity must be greater than 0.");
+
+                var createDto = new CreateCartItemDto
+                {
+                    UserID = userId,
+                    ProductID = productId,
+                    Quantity = quantity
+                };
+
+                var cartItem = await _cartItemService.CreateAsync(createDto);
+                return Ok(cartItem);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
@@ -113,6 +154,10 @@ namespace SalesApp.Controllers
                     return NotFound($"Cart item with ID {id} not found.");
 
                 return Ok(updatedCartItem);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
