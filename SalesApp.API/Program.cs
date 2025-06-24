@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using SalesApp.API.SignalR;
 using SalesApp.BLL.Mapping;
 using SalesApp.BLL.Services;
 using SalesApp.DAL.Data;
@@ -42,6 +44,11 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API for Sales Application"
     });
 });
+// Add SingalR
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true; // Enable detailed errors for debugging
+});
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -66,6 +73,7 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
     });
 }
+app.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
