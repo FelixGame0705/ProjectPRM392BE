@@ -64,7 +64,7 @@ namespace SalesApp.BLL.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task UpdateNotificationAsync(int id)
+        public async Task UpdateNotificationAsync(int id, UpdateNotificationDto d)
         {
             var notification = await _notificationRepository.GetByIdAsync(id);
             if (notification == null)

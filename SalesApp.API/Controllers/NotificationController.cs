@@ -1,17 +1,51 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using SalesApp.API.SignalR;
 using SalesApp.BLL.Services;
 using SalesApp.Models.DTOs;
-using SalesApp.Models.Entities;
 
 [ApiController]
 [Route("api/[controller]")]
 public class NotificationController : ControllerBase
 {
     private readonly INotificationService _notificationService;
-
-    public NotificationController(INotificationService notificationService)
+    private readonly IHubContext<ChatHub, IChatClient> _hubContext;
+    private readonly IUserService _userService;
+    public NotificationController(INotificationService notificationService, IHubContext<ChatHub, IChatClient> hubContext, IUserService userService)
     {
         _notificationService = notificationService;
+        _hubContext = hubContext;
+        _userService = userService;
+    }
+
+    // Gửi notification đơn giản tới tất cả client (test SignalR)
+    [HttpPost("broadcast")]
+    public async Task<IActionResult> Broadcast(string message)
+    {
+        await _hubContext.Clients.All.RecieveMessage(message);
+        return NoContent();
+    }
+
+    // Tạo notification và gửi tới client
+    [HttpPost]
+    public async Task<ActionResult> CreateNotification([FromBody] CreateNotificationDto dto)
+    {
+        if (dto == null || string.IsNullOrWhiteSpace(dto.Message) || dto.UserID <= 0)
+            return BadRequest("Invalid data.");
+        var user = await _userService.GetByIdAsync(dto.UserID);
+        if (user == null)
+        {
+            return BadRequest("UserID không tồn tại.");
+        }
+
+
+        // Lưu vào DB
+        await _notificationService.CreateNotificationAsync(dto);
+
+        // Gửi real-time (tùy chỉnh theo user nếu muốn)
+        await _hubContext.Clients.All.RecieveMessage(dto.Message);
+
+        return NoContent();
     }
 
     [HttpGet]
@@ -24,62 +58,25 @@ public class NotificationController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<NotificationDto?>> GetNotificationById(int id)
     {
-        if (id <= 0)
-        {
-            return BadRequest("Notification ID must be greater than zero.");
-        }
+        if (id <= 0) return BadRequest("ID must be greater than 0");
+
         var notification = await _notificationService.GetNotificationByIdAsync(id);
-        if (notification == null)
-        {
-            return NotFound();
-        }
+        if (notification == null) return NotFound();
+
         return Ok(notification);
     }
 
-    [HttpPost]
-    public async Task<ActionResult> CreateNotification(CreateNotificationDto notification)
-    {
-        if (notification == null)
-        {
-            return BadRequest("Notification cannot be null.");
-        }
-        if (string.IsNullOrEmpty(notification.Message) || notification.UserID <= 0)
-        {
-            return BadRequest("Notification message and UserID cannot be empty.");
-        }
-
-        // Create the notification
-        await _notificationService.CreateNotificationAsync(notification);
-
-        // Retrieve the created notification to get its ID
-        var createdNotification = await _notificationService.GetNotificationByIdAsync(notification.UserID);
-
-        if (createdNotification == null)
-        {
-            return BadRequest("Failed to create notification.");
-        }
-
-        // Use the ID from the created notification
-        return CreatedAtAction(nameof(GetNotificationById), new { id = createdNotification.NotificationID }, createdNotification);
-    }
-
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateNotification(int id)
+    public async Task<ActionResult> UpdateNotification(int id, [FromBody] UpdateNotificationDto dto)
     {
-        if (id <= 0)
-        {
-            return BadRequest("Notification ID must be greater than zero.");
-        }
-        var notification = await _notificationService.GetNotificationByIdAsync(id);
-        if (notification == null || notification.NotificationID != id)      
-        {
-            return BadRequest("Notification ID mismatch.");
-        }
-        if (notification == null || id <= 0)
-        {
-            return BadRequest();
-        }
-        await _notificationService.UpdateNotificationAsync(id);
+        if (id <= 0 || dto == null)
+            return BadRequest("Invalid request.");
+
+        var exists = await _notificationService.GetNotificationByIdAsync(id);
+        if (exists == null)
+            return NotFound("Notification not found.");
+
+        await _notificationService.UpdateNotificationAsync(id, dto);
         return NoContent();
     }
 
@@ -87,10 +84,14 @@ public class NotificationController : ControllerBase
     public async Task<ActionResult> DeleteNotification(int id)
     {
         if (id <= 0)
-        {
-            return BadRequest("Notification ID must be greater than zero.");
-        }   
+            return BadRequest("Invalid ID.");
+
+        var exists = await _notificationService.GetNotificationByIdAsync(id);
+        if (exists == null)
+            return NotFound("Notification not found.");
+
         await _notificationService.DeleteNotificationAsync(id);
         return NoContent();
     }
+
 }
