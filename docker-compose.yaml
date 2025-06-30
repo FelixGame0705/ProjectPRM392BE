@@ -6,6 +6,7 @@ services:
     image: tientrandevops/estore_be:latest
     restart: always
     build:
+      context: .
       dockerfile: SalesApp.API/Dockerfile
     ports:
       - "8089:8080"
