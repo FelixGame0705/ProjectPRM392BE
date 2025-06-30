@@ -26,7 +26,7 @@ services:
       SA_PASSWORD: ${DB_PASSWORD}
       MSSQL_PID: "Express"
     ports:
-      - "1434:1433"
+      - "1464:1433"
     networks:
       - mobile-be
     volumes:
