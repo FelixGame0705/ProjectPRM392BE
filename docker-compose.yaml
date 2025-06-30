@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  tradiva_backend:
+  estore_be:
     container_name: estore_be
     image: tientrandevops/estore_be:latest
     restart: always
