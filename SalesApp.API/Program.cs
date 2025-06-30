@@ -15,7 +15,8 @@ builder.Services.AddControllers();
 
 // Configure Entity Framework
 builder.Services.AddDbContext<SalesAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 // Register repositories and unit of work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -29,21 +30,28 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
-builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>
-{
-    cfg.AddProfile<MappingProfile>();
-}).CreateMapper());
+builder.Services.AddSingleton(provider =>
+    new MapperConfiguration(cfg =>
+    {
+        cfg.AddProfile<MappingProfile>();
+    }).CreateMapper()
+);
+
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "Sales App API",
-        Version = "v1",
-        Description = "API for Sales Application"
-    });
+    c.SwaggerDoc(
+        "v1",
+        new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+            Title = "Sales App API",
+            Version = "v1",
+            Description = "API for Sales Application",
+        }
+    );
 });
+
 // Add SingalR
 builder.Services.AddSignalR(options =>
 {
@@ -53,12 +61,13 @@ builder.Services.AddSignalR(options =>
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy(
+        "AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        }
+    );
 });
 
 var app = builder.Build();
@@ -75,7 +84,8 @@ if (app.Environment.IsDevelopment())
 }
 app.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 app.UseStaticFiles();
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
