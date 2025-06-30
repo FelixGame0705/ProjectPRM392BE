@@ -5,8 +5,10 @@ namespace SalesApp.DAL.Data
 {
     public class SalesAppDbContext : DbContext
     {
-        public SalesAppDbContext(DbContextOptions<SalesAppDbContext> options) : base(options)
+        public SalesAppDbContext(DbContextOptions<SalesAppDbContext> options)
+            : base(options)
         {
+            base.Database.EnsureCreated();
         }
 
         public DbSet<User> Users { get; set; }
@@ -25,13 +27,9 @@ namespace SalesApp.DAL.Data
             base.OnModelCreating(modelBuilder);
 
             // Configure relationships and constraints here if needed
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Username)
-                .IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
 
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
         }
     }
 }
