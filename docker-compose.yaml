@@ -10,7 +10,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - demo-cloudflared
+      - mobile-be
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD};Encrypt=true;TrustServerCertificate=true;
