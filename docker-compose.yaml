@@ -12,6 +12,7 @@ services:
     networks:
       - mobile-be
     environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:8089
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD};Encrypt=true;TrustServerCertificate=true;
       - ASPNETCORE_HTTP_PORTS=8080
