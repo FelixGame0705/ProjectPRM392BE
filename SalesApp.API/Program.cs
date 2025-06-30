@@ -86,6 +86,8 @@ app.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 app.UseStaticFiles();
 
 //app.UseHttpsRedirection();
+
+app.MapGet("/", () => "It works!");
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
