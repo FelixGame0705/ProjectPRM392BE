@@ -82,6 +82,12 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
     });
 }
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sales App API V1");
+    c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
+});
 app.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 app.UseStaticFiles();
 
