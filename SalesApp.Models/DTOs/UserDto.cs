@@ -9,7 +9,13 @@
         public string? Address { get; set; }
         public string Role { get; set; }
     }
-
+    public class LoginResponseDTO
+    {
+        public string? Username { get; set; } = null!;
+        public string? AccessToken { get; set; } = null!;
+        public int ExpiresIn { get; set; }
+        public string? Role { get; set; }
+    }
     public class CreateUserDto
     {
         public string Username { get; set; }
