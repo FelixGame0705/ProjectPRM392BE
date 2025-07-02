@@ -7,5 +7,6 @@ namespace SalesApp.BLL.Services
         Task<UserDto?> GetUserByUsernameAsync(string username);
         Task<UserDto?> GetUserByEmailAsync(string email);
         Task<bool> ValidateUserCredentialsAsync(string username, string password);
+        Task<LoginResponseDTO?> LoginAsync(LoginDto loginDto);
     }
 }
