@@ -19,7 +19,8 @@ builder.Services.AddControllers();
 
 // Configure Entity Framework
 builder.Services.AddDbContext<SalesAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 // Register repositories and unit of work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -37,10 +38,13 @@ builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 
-builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>
-{
-    cfg.AddProfile<MappingProfile>();
-}).CreateMapper());
+builder.Services.AddSingleton(provider =>
+    new MapperConfiguration(cfg =>
+    {
+        cfg.AddProfile<MappingProfile>();
+    }).CreateMapper()
+);
+
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen(c =>
@@ -99,6 +103,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddAuthorization();
+
 // Add SingalR
 builder.Services.AddSignalR(options =>
 {
@@ -108,12 +113,13 @@ builder.Services.AddSignalR(options =>
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy(
+        "AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        }
+    );
 });
 
 var app = builder.Build();
@@ -128,9 +134,18 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
     });
 }
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sales App API V1");
+    c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
+});
 app.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 app.UseStaticFiles();
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
+
+app.MapGet("/", () => "It works!");
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();

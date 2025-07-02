@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  estore_be:
+    container_name: estore_be
+    image: tientrandevops/estore_be:latest
+    restart: always
+    build:
+      context: .
+      dockerfile: SalesApp.API/Dockerfile
+    ports:
+      - "8089:8080"
+    networks:
+      - mobile-be
+    environment:
+      # - ASPNETCORE_URLS=http://0.0.0.0:8080
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD};Encrypt=true;TrustServerCertificate=true;
+      - ASPNETCORE_HTTP_PORTS=8080
+    depends_on:
+      - db_sales_app
+
+  db_sales_app:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${DB_PASSWORD}
+      MSSQL_PID: "Express"
+    ports:
+      - "1464:1433"
+    networks:
+      - mobile-be
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:
+
+networks:
+  mobile-be:
+     name: mobile-be
+     external: true
