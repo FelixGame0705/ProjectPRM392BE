@@ -46,10 +46,27 @@ namespace SalesApp.BLL.Mapping
             CreateMap<UpdateCartItemDto, CartItem>()
                 .ForMember(dest => dest.Price, opt => opt.Ignore()) // Price will be updated from Product if ProductID changes
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            // Order mappings
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.TotalAmount, opt => opt.Ignore()); // Will be calculated manually in service
+            CreateMap<CreateOrderDto, Order>();
+
+            // Payment mappings
+            CreateMap<Payment, PaymentDto>();
+            CreateMap<CreatePaymentDto, Payment>();
             CreateMap<NotificationDto, Notification>();
             CreateMap<Notification, NotificationDto>();
-            CreateMap<CreateNotificationDto, Notification>()
-                .ForMember(dest => dest.IsRead, opt => opt.MapFrom(src => false)); // Default IsRead to false on creation
+            CreateMap<CreateNotificationDto, Notification>().ReverseMap();
+            CreateMap<ChatDto, ChatMessage>();
+            CreateMap<ChatMessage, ChatDto>();
+
+            CreateMap<User, UserDto>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString())); // Assuming Role is an enum in User entity
+            CreateMap<User, LoginDto>().ReverseMap()
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Password will be hashed in service
+
+
 
 
 
