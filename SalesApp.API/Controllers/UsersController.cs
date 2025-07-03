@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SalesApp.BLL.Services;
 using SalesApp.Models.DTOs;
 
@@ -14,6 +15,22 @@ namespace SalesApp.API.Controllers
         {
             _userService = userService;
         }
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            try
+            {
+                var token = await _userService.LoginAsync(loginDto);
+                return Ok(new { Token = token });
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("Tên người dùng hoặc mật khẩu không đúng");
+            }
+        }
+
+   
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()

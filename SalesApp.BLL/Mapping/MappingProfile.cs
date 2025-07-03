@@ -55,6 +55,22 @@ namespace SalesApp.BLL.Mapping
             // Payment mappings
             CreateMap<Payment, PaymentDto>();
             CreateMap<CreatePaymentDto, Payment>();
+            CreateMap<NotificationDto, Notification>();
+            CreateMap<Notification, NotificationDto>();
+            CreateMap<CreateNotificationDto, Notification>().ReverseMap();
+            CreateMap<ChatDto, ChatMessage>();
+            CreateMap<ChatMessage, ChatDto>();
+
+            CreateMap<User, UserDto>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString())); // Assuming Role is an enum in User entity
+            CreateMap<User, LoginDto>().ReverseMap()
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Password will be hashed in service
+
+
+
+
+
+
         }
     }
 }

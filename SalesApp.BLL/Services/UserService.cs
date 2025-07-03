@@ -1,8 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
 using SalesApp.BLL.Services;
+using SalesApp.DAL.Repositories;
 using SalesApp.DAL.UnitOfWork;
 using SalesApp.Models.DTOs;
 using SalesApp.Models.Entities;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,13 +18,56 @@ namespace SalesApp.BLL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
+        private readonly IUserRepository _accountRepository;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, IUserRepository userRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _accountRepository = userRepository;
         }
+        public async Task<LoginResponseDTO?> LoginAsync(LoginDto loginDto)
+        {
+            var user = await _accountRepository.GetUserByNameAsync(loginDto.Username);
+            if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
+                throw new UnauthorizedAccessException("Invalid credentials");
 
+
+            var issuer = _configuration["JwtConfig:Issuer"];
+            var audience = _configuration["JwtConfig:Audience"];
+            var key = _configuration["JwtConfig:Key"];
+            var tokenValidityMinues = _configuration.GetValue<int>("JwtConfig:TokenValidityMinutes", 30);
+            var tokenExpiryTimeStamp = DateTime.UtcNow.AddMinutes(tokenValidityMinues);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role.ToString()) // Assuming User has a Role property
+                }),
+                Expires = tokenExpiryTimeStamp,
+                Issuer = issuer,
+                Audience = audience,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key))
+                , SecurityAlgorithms.HmacSha256Signature),
+            };
+
+            var jwtTokenHandler = new JwtSecurityTokenHandler(); // Renamed variable to avoid conflict
+            var securityToken = jwtTokenHandler.CreateToken(tokenDescriptor);
+            var assertedToken = jwtTokenHandler.WriteToken(securityToken);
+
+            return new LoginResponseDTO
+            {
+                AccessToken = assertedToken,
+                Username = loginDto.Username,
+                ExpiresIn = (int)(tokenExpiryTimeStamp - DateTime.UtcNow).TotalSeconds,
+                Role = user.Role.ToString() // Fix: Assign the RoleEnum directly instead of converting to string
+            };
+        }
         public async Task<IEnumerable<UserDto>> GetAllAsync()
         {
             var users = await _unitOfWork.Repository<User>().GetAllAsync();
