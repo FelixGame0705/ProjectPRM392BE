@@ -46,6 +46,15 @@ namespace SalesApp.BLL.Mapping
             CreateMap<UpdateCartItemDto, CartItem>()
                 .ForMember(dest => dest.Price, opt => opt.Ignore()) // Price will be updated from Product if ProductID changes
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            // Order mappings
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.TotalAmount, opt => opt.Ignore()); // Will be calculated manually in service
+            CreateMap<CreateOrderDto, Order>();
+
+            // Payment mappings
+            CreateMap<Payment, PaymentDto>();
+            CreateMap<CreatePaymentDto, Payment>();
             CreateMap<NotificationDto, Notification>();
             CreateMap<Notification, NotificationDto>();
             CreateMap<CreateNotificationDto, Notification>().ReverseMap();
