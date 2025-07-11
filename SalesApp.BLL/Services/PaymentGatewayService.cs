@@ -38,7 +38,12 @@ namespace SalesApp.BLL.Services
                 var transactionId = GenerateTransactionId();
                 var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-                var vnpayData = new Dictionary<string, string>
+                // Use "string" for VNPay sandbox compatibility
+                var returnUrl = string.IsNullOrWhiteSpace(request.ReturnUrl) || 
+                               request.ReturnUrl.Equals("string", StringComparison.OrdinalIgnoreCase) 
+                               ? "string" : "string";
+
+                var vnpayData = new SortedDictionary<string, string>
                 {
                     { "vnp_Version", "2.1.0" },
                     { "vnp_Command", "pay" },
@@ -49,16 +54,24 @@ namespace SalesApp.BLL.Services
                     { "vnp_OrderInfo", orderInfo },
                     { "vnp_OrderType", "other" },
                     { "vnp_Locale", request.Language ?? "vn" },
-                    { "vnp_ReturnUrl", request.ReturnUrl },
+                    { "vnp_ReturnUrl", returnUrl },
                     { "vnp_IpAddr", "127.0.0.1" },
                     { "vnp_CreateDate", createDate }
                 };
 
-                var sortedParams = vnpayData.OrderBy(x => x.Key).ToList();
-                var queryString = string.Join("&", sortedParams.Select(x => $"{x.Key}={HttpUtility.UrlEncode(x.Value)}"));
+                // Build rawData for hash calculation
+                var rawData = new StringBuilder();
+                foreach (var item in vnpayData)
+                {
+                    rawData.Append($"{item.Key}={HttpUtility.UrlEncode(item.Value, Encoding.UTF8)}&");
+                }
+                rawData.Remove(rawData.Length - 1, 1);
 
-                var secureHash = CreateVNPaySecureHash(queryString, hashSecret);
-                var paymentUrl = $"{baseUrl}?{queryString}&vnp_SecureHash={secureHash}";
+                // Calculate hash
+                var secureHash = CreateVNPaySecureHash(rawData.ToString(), hashSecret);
+
+                // Build payment URL
+                var paymentUrl = $"{baseUrl}?{rawData}&vnp_SecureHash={secureHash}";
 
                 return new PaymentResponseDto
                 {
@@ -174,21 +187,30 @@ namespace SalesApp.BLL.Services
                 var secureHash = parameters["vnp_SecureHash"];
                 parameters.Remove("vnp_SecureHash");
 
-                var sortedParams = parameters.OrderBy(x => x.Key).ToList();
-                var queryString = string.Join("&", sortedParams.Select(x => $"{x.Key}={x.Value}"));
-                var expectedHash = CreateVNPaySecureHash(queryString, hashSecret);
+                var sortedParams = new SortedDictionary<string, string>(parameters);
 
-                var responseCode = parameters.GetValueOrDefault("vnp_ResponseCode", "");
-                var amount = decimal.Parse(parameters.GetValueOrDefault("vnp_Amount", "0")) / 100;
+                var rawData = new StringBuilder();
+                foreach (var item in sortedParams)
+                {
+                    rawData.Append($"{item.Key}={HttpUtility.UrlEncode(item.Value, Encoding.UTF8)}&");
+                }
+                rawData.Remove(rawData.Length - 1, 1);
+
+                var expectedHash = CreateVNPaySecureHash(rawData.ToString(), hashSecret);
+                var responseCode = sortedParams.GetValueOrDefault("vnp_ResponseCode", "");
+                var amount = decimal.Parse(sortedParams.GetValueOrDefault("vnp_Amount", "0")) / 100;
+
+                bool isValidSignature = secureHash.Equals(expectedHash, StringComparison.OrdinalIgnoreCase);
 
                 return new PaymentCallbackDto
                 {
-                    TransactionId = parameters.GetValueOrDefault("vnp_TxnRef", ""),
-                    Status = responseCode == "00" ? "SUCCESS" : "FAILED",
-                    GatewayTransactionId = parameters.GetValueOrDefault("vnp_TransactionNo", ""),
+                    TransactionId = sortedParams.GetValueOrDefault("vnp_TxnRef", ""),
+                    Status = responseCode == "00" && isValidSignature ? "SUCCESS" : "FAILED",
+                    GatewayTransactionId = sortedParams.GetValueOrDefault("vnp_TransactionNo", ""),
                     Amount = amount,
-                    Message = responseCode == "00" ? "Payment successful" : "Payment failed",
-                    AdditionalData = parameters
+                    Message = !isValidSignature ? "Invalid signature" : 
+                             responseCode == "00" ? "Payment successful" : "Payment failed",
+                    AdditionalData = new Dictionary<string, string>(sortedParams)
                 };
             }
             catch (Exception ex)
