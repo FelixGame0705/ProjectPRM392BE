@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -19,14 +20,17 @@ namespace SalesApp.BLL.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         private readonly IUserRepository _accountRepository;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _accountRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<LoginResponseDTO?> LoginAsync(LoginDto loginDto)
         {
@@ -118,6 +122,31 @@ namespace SalesApp.BLL.Services
             return await _unitOfWork.Repository<User>().ExistsAsync(id);
         }
 
+        public async Task<User> GetCurrentAccountAsync()
+        {
+            try
+            {
+                string userId = GetUserId();
+                var account = await _unitOfWork.UserRepository.GetByIdAsync(int.Parse(userId));
+                return account;
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+        public string GetUserId()
+        {
+            try
+            {
+                return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new();
+            }
+            catch
+            {
+                throw new UnauthorizedAccessException("User is not authenticated or does not have a valid user ID.");
+            }
+        }
         public async Task<UserDto?> GetUserByUsernameAsync(string username)
         {
             var users = await _unitOfWork.Repository<User>().FindAsync(u => u.Username == username);

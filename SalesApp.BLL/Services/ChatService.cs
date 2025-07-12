@@ -1,60 +1,151 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using SalesApp.API.Controllers;
+using GoEStores.Core.Base;
+using GoEStores.Core.DTO.Responses;
+using GoEStores.Repositories.Entity;
+using GoEStores.Services.Interface;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
+using SalesApp.BLL.HubRealTime;
+using SalesApp.BLL.Services;
 using SalesApp.DAL.Repositories;
 using SalesApp.DAL.UnitOfWork;
-using SalesApp.Models.DTOs;
-using SalesApp.Models.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SalesApp.BLL.Services
+namespace GoEStores.Services.Services
 {
     public class ChatService : IChatService
     {
-        private readonly IChatRepository _chatRepository;
-        private readonly IUnitOfWork _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _currentUserService;
         private readonly IMapper _mapper;
+        private readonly IHubContext<ChatHubR> _hubContext;
 
-        public ChatService( IChatRepository chatRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public ChatService(IUnitOfWork unitOfWork, IUserService currentUserService, IMapper mapper, IHubContext<ChatHubR> hubContext)
         {
-            _chatRepository = chatRepository;
-            _context = unitOfWork;
+            _unitOfWork = unitOfWork;
+            _currentUserService = currentUserService;
             _mapper = mapper;
-        }
-        public async Task<IEnumerable<ChatDto>> GetChatHistoryAsync(int userId)
-        {
-            var chats = await _chatRepository
-                .GetQueryable()
-                .Where(c => c.UserID == userId)
-                .OrderByDescending(c => c.SentAt)
-                .ToListAsync();
-
-            return _mapper.Map<IEnumerable<ChatDto>>(chats);
+            _hubContext = hubContext;
         }
 
-
-        public async Task SaveChatMessageAsync(ChatDto chat)
+        public async Task<ChatHubResponse> CreateChatHup(Guid secondUserId)
         {
-            if (chat == null)
+            await _unitOfWork.BeginTransactionAsync();
+            try
             {
-                throw new ArgumentNullException(nameof(chat), "chat cannot be null.");
+                var currentUserId = _currentUserService.GetUserId();
+
+                var checkdupl = await _unitOfWork.Repository<ChatHub>()
+                    .GetFirstOrDefaultAsync(_ => (_.FUserId == Guid.Parse(currentUserId) && _.SUserId == secondUserId) ||
+                                             (_.FUserId == secondUserId && _.SUserId == Guid.Parse(currentUserId)));
+                if (checkdupl != null)
+                {
+                    throw new BaseException(StatusCodes.Status409Conflict, checkdupl.Id.ToString());
+                }
+                var chatHup = new ChatHub
+                {
+                    FUserId = Guid.Parse(currentUserId),
+                    SUserId = secondUserId
+                };
+                await _unitOfWork.Repository<ChatHub>().AddAsync(chatHup);
+                await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.CommitTransactionAsync();
+
+                return _mapper.Map<ChatHubResponse>(chatHup);
             }
-            if (string.IsNullOrWhiteSpace(chat.Message))
+            catch
             {
-                throw new ArgumentException("Chat message cannot be null or empty.", nameof(chat.Message));
+                await _unitOfWork.RollbackTransactionAsync();
+                throw;
             }
-            if (chat.UserID <= 0)
+        }
+
+        public async Task CreateChatMessage(Guid chatHupId, string content, string type)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            try
             {
-                throw new ArgumentException("User ID must be greater than zero.", nameof(chat.UserID));
+                var currentUserId = Guid.Parse(_currentUserService.GetUserId());
+                var chatHup = await _unitOfWork.Repository<ChatHub>()
+                    .GetFirstOrDefaultAsync(_ => _.Id == chatHupId);
+                if (chatHup is null)
+                {
+                    throw new BaseException(StatusCodes.Status404NotFound, "ChatHub not found");
+                }
+                if (chatHup.FUserId != currentUserId && chatHup.SUserId != currentUserId)
+                {
+                    throw new BaseException(StatusCodes.Status403Forbidden, "You are not a member of this chat hub");
+                }
+                var chatMessage = new ChatMessage
+                {
+                    ChatHubId = chatHupId,
+                    Content = content,
+                    Type = type,
+                    SenderId = currentUserId
+                };
+                await _unitOfWork.Repository<ChatMessage>().AddAsync(chatMessage);
+                await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.CommitTransactionAsync();
+
+                var receiverId = chatHup.FUserId == currentUserId ? chatHup.SUserId : chatHup.FUserId;
+
+                await _hubContext.Clients.User(receiverId.ToString())
+                                 .SendAsync("ReceiveMessage", new
+                                 {
+                                     SenderId = currentUserId,
+                                     Content = chatMessage.Content,
+                                     Type = chatMessage.Type,
+                                     SentAt = chatMessage.CreatedTime
+                                 });
             }
-            var entity = _mapper.Map<ChatMessage>(chat);
-            await _chatRepository.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            catch
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                throw;
+            }
+        }
+
+        public async Task<List<ChatHubResponse>> GetAllChatHupsByUserId(Guid userId)
+        {
+            try
+            {
+                var chatHups = await _unitOfWork.Repository<ChatHub>()
+                                                .GetAllAsync(_ => _.FUserId == userId || _.SUserId == userId, null);
+                if (chatHups is null)
+                {
+                    throw new BaseException(StatusCodes.Status404NotFound, "No chat hubs found for this user.");
+                }
+                chatHups = chatHups.OrderByDescending(_ => _.CreatedTime).ToList();
+                var responseChatHups = _mapper.Map<List<ChatHubResponse>>(chatHups);
+                return responseChatHups;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<ChatHubResponse> GetChatHupById(Guid chatHupId)
+        {
+            try
+            {
+                var chatHup = await _unitOfWork.Repository<ChatHub>()
+                    .GetFirstOrDefaultAsync(
+                            predicate: _ => _.Id == chatHupId,
+                            includeProperties: "ChatMessages");
+                if (chatHup is null)
+                {
+                    throw new BaseException(StatusCodes.Status404NotFound, "ChatHub not found");
+                }
+                chatHup.ChatMessages = chatHup.ChatMessages
+                                              .OrderByDescending(_ => _.CreatedTime)
+                                              .ToList();
+                return _mapper.Map<ChatHubResponse>(chatHup);
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
-
 }

@@ -1,23 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using GoEStores.Core.Base;
+using SalesApp.Models.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SalesApp.Models.Entities
+namespace GoEStores.Repositories.Entity
 {
-    [Table("ChatMessages")]
-    public class ChatMessage
+    public class ChatMessage : BaseEntity
     {
-        [Key]
-        public int ChatMessageID { get; set; }
-
-        public int? UserID { get; set; }
-
-        public string? Message { get; set; }
-
-        [Required]
-        public DateTime SentAt { get; set; } = DateTime.Now;
-
-        // Navigation properties
-        [ForeignKey("UserID")]
-        public virtual User? User { get; set; }
+        public string Content { get; set; }
+        public string Type { get; set; }
+        public Guid? SenderId { get; set; }
+        public virtual User Sender { get; set; }
+        public Guid ChatHubId { get; set; }
+        public virtual ChatHub ChatHub { get; set; }
     }
 }

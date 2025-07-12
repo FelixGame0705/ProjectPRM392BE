@@ -1,18 +1,16 @@
-﻿using SalesApp.Models.DTOs;
-using SalesApp.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using GoEStores.Core.DTO.Responses;
 
-namespace SalesApp.BLL.Services
+namespace GoEStores.Services.Interface
 {
     public interface IChatService
     {
-        Task SaveChatMessageAsync(ChatDto chat);
-        Task<IEnumerable<ChatDto>> GetChatHistoryAsync(int userId);
 
+        Task<ChatHubResponse> CreateChatHup(Guid SecondUserId);
+        Task<List<ChatHubResponse>> GetAllChatHupsByUserId(Guid userId);
+        Task<ChatHubResponse> GetChatHupById(Guid chatHupId);
+        Task CreateChatMessage(Guid chatHupId, string content, string type);
+        //Task DeleteChatMessage(Guid chatMessageId);
+        //Task<ResponseChatMessage> UpdateChatMessage(Guid chatMessageId, string content);
     }
-
 }

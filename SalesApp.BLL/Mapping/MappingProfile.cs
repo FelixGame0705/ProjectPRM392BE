@@ -49,8 +49,7 @@ namespace SalesApp.BLL.Mapping
             CreateMap<NotificationDto, Notification>();
             CreateMap<Notification, NotificationDto>();
             CreateMap<CreateNotificationDto, Notification>().ReverseMap();
-            CreateMap<ChatDto, ChatMessage>();
-            CreateMap<ChatMessage, ChatDto>();
+
 
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString())); // Assuming Role is an enum in User entity

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GoEStores.Repositories.Entity;
+using Microsoft.EntityFrameworkCore;
 using SalesApp.Models.Entities;
 
 namespace SalesApp.DAL.Data

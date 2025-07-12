@@ -1,55 +1,78 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using GoEStores.Core.DTO.Requests;
+using GoEStores.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
-using SalesApp.BLL.Services;
-using SalesApp.Models.DTOs;
-using System.Security.Claims;
 
-namespace SalesApp.API.Controllers
+namespace GoEStores.Api.Controllers
 {
+    [Route("api/chat")]
     [ApiController]
-    [Route("api/[controller]")]
-    [Authorize] // đảm bảo có JWT để lấy UserID
     public class ChatController : ControllerBase
     {
         private readonly IChatService _chatService;
-
         public ChatController(IChatService chatService)
         {
             _chatService = chatService;
         }
 
-        [HttpPost("send")]
-        public async Task<IActionResult> SendChat([FromBody] ChatDto chatDto)
+        [HttpPost("hub")]
+        public async Task<IActionResult> CreateChatHub(Guid secondUserId)
         {
-            var userId = GetUserId();
-            if (userId == null)
-                return Unauthorized("User not authenticated");
+            try
+            {
+                var result = await _chatService.CreateChatHup(secondUserId);
+                return Ok(result);
+            }
+            
 
-            if (string.IsNullOrWhiteSpace(chatDto.Message))
-                return BadRequest("Message is required");
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet("hub/{id}")]
+        public async Task<IActionResult> GetChatHubById(Guid id)
+        {
+            try
+            {
+                var result = await _chatService.GetChatHupById(id);
+                return Ok(result);
+            }
 
-            chatDto.UserID = userId.Value;
-            chatDto.SentAt = DateTime.Now;
-
-            await _chatService.SaveChatMessageAsync(chatDto);
-            return Ok(new { message = "Chat saved successfully", data = chatDto });
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        [HttpGet("history")]
-        public async Task<IActionResult> GetChatHistory()
+        [HttpGet("hubs/user/{id}")]
+        public async Task<IActionResult> GetChatHubs(Guid id)
         {
-            var userId = GetUserId();
-            if (userId == null)
-                return Unauthorized();
-
-            var messages = await _chatService.GetChatHistoryAsync(userId.Value);
-            return Ok(messages);
+            try
+            {
+                var result = await _chatService.GetAllChatHupsByUserId(id);
+                return Ok(result);
+            }
+  
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        private int? GetUserId()
+        [HttpPost("message")]
+        public async Task<IActionResult> CreateMessage([FromBody] CreateMessageRequest model)
         {
-            var userIdStr = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return int.TryParse(userIdStr, out var userId) ? userId : null;
+            try
+            {
+                var type = model.Type.ToString();
+                await _chatService.CreateChatMessage(model.ChatHubId, model.Content, type);
+                return Ok("Saved successfull.");
+            }
+          
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

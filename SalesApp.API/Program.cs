@@ -1,10 +1,13 @@
-using AutoMapper;
+﻿using AutoMapper;
+using GoEStores.Repositories.Entity;
+using GoEStores.Services.Interface;
+using GoEStores.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SalesApp.API.SignalR;
+using SalesApp.BLL.HubRealTime;
 using SalesApp.BLL.Mapping;
 using SalesApp.BLL.Services;
 using SalesApp.DAL.Data;
@@ -22,11 +25,15 @@ builder.Services.AddDbContext<SalesAppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+
 // Register repositories and unit of work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
+builder.Services.AddHttpContextAccessor();
 
 
 // Register services
@@ -37,6 +44,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IStoreLocationService, StoreLocationService>();
 
 builder.Services.AddSingleton(provider =>
     new MapperConfiguration(cfg =>
@@ -140,8 +148,13 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sales App API V1");
     c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
 });
-app.MapHub<ChatHub>("/chathub"); // Map SignalR hub
-app.UseStaticFiles();
+app.MapHub<ChatHubR>("/chathub", options =>
+{
+    options.Transports =
+        Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets |
+        Microsoft.AspNetCore.Http.Connections.HttpTransportType.ServerSentEvents |
+        Microsoft.AspNetCore.Http.Connections.HttpTransportType.LongPolling;
+}); app.UseStaticFiles();
 
 //app.UseHttpsRedirection();
 
