@@ -66,11 +66,12 @@ namespace SalesApp.BLL.Mapping
             CreateMap<User, LoginDto>().ReverseMap()
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Password will be hashed in service
 
-
-
-
-
-
+            // StoreLocation mappings
+            CreateMap<StoreLocation, StoreLocationDto>()
+                .ForMember(dest => dest.DistanceKm, opt => opt.Ignore()); // Will be calculated in service
+            CreateMap<CreateStoreLocationDto, StoreLocation>();
+            CreateMap<UpdateStoreLocationDto, StoreLocation>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

@@ -41,6 +41,7 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IPaymentGatewayService, PaymentGatewayService>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<ITransactionMappingService, TransactionMappingService>();
+builder.Services.AddScoped<IStoreLocationService, StoreLocationService>();
 
 // Register memory cache for billing details and transaction mapping
 builder.Services.AddMemoryCache();
