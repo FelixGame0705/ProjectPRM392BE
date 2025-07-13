@@ -28,7 +28,7 @@ namespace GoEStores.Services.Services
             _hubContext = hubContext;
         }
 
-        public async Task<ChatHubResponse> CreateChatHup(Guid secondUserId)
+        public async Task<ChatHubResponse> CreateChatHup(int secondUserId)
         {
             await _unitOfWork.BeginTransactionAsync();
             try
@@ -36,16 +36,20 @@ namespace GoEStores.Services.Services
                 var currentUserId = _currentUserService.GetUserId();
 
                 var checkdupl = await _unitOfWork.Repository<ChatHub>()
-                    .GetFirstOrDefaultAsync(_ => (_.FUserId == Guid.Parse(currentUserId) && _.SUserId == secondUserId) ||
-                                             (_.FUserId == secondUserId && _.SUserId == Guid.Parse(currentUserId)));
+                    .GetFirstOrDefaultAsync(_ => (_.FUserId == currentUserId && _.SUserId == secondUserId) ||
+                    (_.FUserId == secondUserId && _.SUserId == currentUserId));
                 if (checkdupl != null)
                 {
                     throw new BaseException(StatusCodes.Status409Conflict, checkdupl.Id.ToString());
                 }
                 var chatHup = new ChatHub
                 {
-                    FUserId = Guid.Parse(currentUserId),
-                    SUserId = secondUserId
+                    Id = Guid.NewGuid(),
+                    FUserId = currentUserId,
+                    SUserId = secondUserId,
+                    Status = "Active",
+                    CreatedTime = DateTimeOffset.Now,
+                    UpdatedTime = DateTimeOffset.Now
                 };
                 await _unitOfWork.Repository<ChatHub>().AddAsync(chatHup);
                 await _unitOfWork.SaveChangesAsync();
@@ -65,7 +69,7 @@ namespace GoEStores.Services.Services
             await _unitOfWork.BeginTransactionAsync();
             try
             {
-                var currentUserId = Guid.Parse(_currentUserService.GetUserId());
+                var currentUserId = _currentUserService.GetUserId();
                 var chatHup = await _unitOfWork.Repository<ChatHub>()
                     .GetFirstOrDefaultAsync(_ => _.Id == chatHupId);
                 if (chatHup is null)
@@ -105,7 +109,7 @@ namespace GoEStores.Services.Services
             }
         }
 
-        public async Task<List<ChatHubResponse>> GetAllChatHupsByUserId(Guid userId)
+        public async Task<List<ChatHubResponse>> GetAllChatHupsByUserId(int userId)
         {
             try
             {

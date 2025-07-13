@@ -126,8 +126,8 @@ namespace SalesApp.BLL.Services
         {
             try
             {
-                string userId = GetUserId();
-                var account = await _unitOfWork.UserRepository.GetByIdAsync(int.Parse(userId));
+                int userId = GetUserId();
+                var account = await _unitOfWork.UserRepository.GetByIdAsync(userId);
                 return account;
             }
             catch
@@ -136,15 +136,23 @@ namespace SalesApp.BLL.Services
             }
 
         }
-        public string GetUserId()
+        public int GetUserId()
         {
             try
             {
-                return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new();
+                string userIdString = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? throw new InvalidOperationException("User is not authenticated or does not have a valid user ID.");
+
+                if (!int.TryParse(userIdString, out int userId))
+                {
+                    throw new InvalidOperationException("User ID is not a valid integer.");
+                }
+
+                return userId;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new UnauthorizedAccessException("User is not authenticated or does not have a valid user ID.");
+                throw new UnauthorizedAccessException("User is not authenticated or does not have a valid user ID.", ex);
             }
         }
         public async Task<UserDto?> GetUserByUsernameAsync(string username)

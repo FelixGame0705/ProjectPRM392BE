@@ -1,5 +1,7 @@
 ﻿// MappingProfile.cs (Updated)
 using AutoMapper;
+using GoEStores.Core.DTO.Responses;
+using GoEStores.Repositories.Entity;
 using SalesApp.Models.DTOs;
 using SalesApp.Models.Entities;
 
@@ -57,6 +59,15 @@ namespace SalesApp.BLL.Mapping
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Password will be hashed in service
 
 
+            CreateMap<ResponseChatMessage, ChatMessage>().ReverseMap();
+            CreateMap<ChatHub, ChatHubResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.CreatedTime, opt => opt.MapFrom(src => src.CreatedTime))
+            .ForMember(dest => dest.UpdatedTime, opt => opt.MapFrom(src => src.UpdatedTime))
+            .ForMember(dest => dest.FUserId, opt => opt.MapFrom(src => src.FUserId ?? 0)) // Xử lý nullable
+            .ForMember(dest => dest.SUserId, opt => opt.MapFrom(src => src.SUserId))
+            .ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => src.ChatMessages));
 
 
 

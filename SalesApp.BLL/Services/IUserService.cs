@@ -10,7 +10,7 @@ namespace SalesApp.BLL.Services
         Task<bool> ValidateUserCredentialsAsync(string username, string password);
         Task<LoginResponseDTO?> LoginAsync(LoginDto loginDto);
         Task<User> GetCurrentAccountAsync();
-        string GetUserId();
+        int GetUserId();
 
     }
 }

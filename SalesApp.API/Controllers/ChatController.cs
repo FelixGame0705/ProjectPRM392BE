@@ -1,4 +1,5 @@
-﻿using GoEStores.Core.DTO.Requests;
+﻿using GoEStores.Core.Base;
+using GoEStores.Core.DTO.Requests;
 using GoEStores.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,15 +16,17 @@ namespace GoEStores.Api.Controllers
         }
 
         [HttpPost("hub")]
-        public async Task<IActionResult> CreateChatHub(Guid secondUserId)
+        public async Task<IActionResult> CreateChatHub(int secondUserId)
         {
             try
             {
                 var result = await _chatService.CreateChatHup(secondUserId);
                 return Ok(result);
             }
-            
-
+            catch (BaseException ex)
+            {
+                return StatusCode(ex.ErrorCode, ex.ErrorMessage);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -37,7 +40,10 @@ namespace GoEStores.Api.Controllers
                 var result = await _chatService.GetChatHupById(id);
                 return Ok(result);
             }
-
+            catch (BaseException ex)
+            {
+                return StatusCode(ex.ErrorCode, ex.ErrorMessage);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -45,14 +51,17 @@ namespace GoEStores.Api.Controllers
         }
 
         [HttpGet("hubs/user/{id}")]
-        public async Task<IActionResult> GetChatHubs(Guid id)
+        public async Task<IActionResult> GetChatHubs(int id)
         {
             try
             {
                 var result = await _chatService.GetAllChatHupsByUserId(id);
                 return Ok(result);
             }
-  
+            catch (BaseException ex)
+            {
+                return StatusCode(ex.ErrorCode, ex.ErrorMessage);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -68,7 +77,10 @@ namespace GoEStores.Api.Controllers
                 await _chatService.CreateChatMessage(model.ChatHubId, model.Content, type);
                 return Ok("Saved successfull.");
             }
-          
+            catch (BaseException ex)
+            {
+                return StatusCode(ex.ErrorCode, ex.ErrorMessage);
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);

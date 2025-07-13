@@ -10,11 +10,11 @@ namespace GoEStores.Repositories.Entity
 {
     public class ChatMessage : BaseEntity
     {
-        public string Content { get; set; }
-        public string Type { get; set; }
-        public Guid? SenderId { get; set; }
-        public virtual User Sender { get; set; }
+        public string Content { get; set; } = null!;
+        public string Type { get; set; } = null!;
+        public int? SenderId { get; set; } = null!;
+        public virtual User Sender { get; set; } = null!;
         public Guid ChatHubId { get; set; }
-        public virtual ChatHub ChatHub { get; set; }
+        public virtual ChatHub ChatHub { get; set; } = null!;
     }
 }

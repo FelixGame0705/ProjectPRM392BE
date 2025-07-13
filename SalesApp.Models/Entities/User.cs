@@ -36,7 +36,11 @@ namespace SalesApp.Models.Entities
 
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<Notification> Notifications { get; set; }
-        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
+        //public virtual ICollection<Notification> Notifications { get; set; }
+        //public virtual ICollection<ChatMessage> ChatMessages { get; set; }
+
+        public ICollection<ChatHub> ChatHubsAsFUser { get; set; } = new List<ChatHub>();
+        public ICollection<ChatHub> ChatHubsAsSUser { get; set; } = new List<ChatHub>();
+        public ICollection<ChatMessage> SentMessages { get; set; } = new List<ChatMessage>();
     }
 }
