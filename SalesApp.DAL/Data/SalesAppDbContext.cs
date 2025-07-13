@@ -10,7 +10,7 @@ namespace SalesApp.DAL.Data
         public SalesAppDbContext(DbContextOptions<SalesAppDbContext> options)
             : base(options)
         {
-            //base.Database.EnsureCreated();
+            base.Database.Migration();
         }
 
         public DbSet<User> Users { get; set; }
