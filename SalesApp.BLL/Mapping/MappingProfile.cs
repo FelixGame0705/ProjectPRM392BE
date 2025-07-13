@@ -48,6 +48,15 @@ namespace SalesApp.BLL.Mapping
             CreateMap<UpdateCartItemDto, CartItem>()
                 .ForMember(dest => dest.Price, opt => opt.Ignore()) // Price will be updated from Product if ProductID changes
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            // Order mappings
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.TotalAmount, opt => opt.Ignore()); // Will be calculated manually in service
+            CreateMap<CreateOrderDto, Order>();
+
+            // Payment mappings
+            CreateMap<Payment, PaymentDto>();
+            CreateMap<CreatePaymentDto, Payment>();
             CreateMap<NotificationDto, Notification>();
             CreateMap<Notification, NotificationDto>();
             CreateMap<CreateNotificationDto, Notification>().ReverseMap();
@@ -57,7 +66,6 @@ namespace SalesApp.BLL.Mapping
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString())); // Assuming Role is an enum in User entity
             CreateMap<User, LoginDto>().ReverseMap()
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); // Password will be hashed in service
-
 
             CreateMap<ResponseChatMessage, ChatMessage>().ReverseMap();
             CreateMap<ChatHub, ChatHubResponse>()
@@ -71,7 +79,12 @@ namespace SalesApp.BLL.Mapping
 
             CreateMap<Notification, NotificationResponse>();
 
-
+            // StoreLocation mappings
+            CreateMap<StoreLocation, StoreLocationDto>()
+                .ForMember(dest => dest.DistanceKm, opt => opt.Ignore()); // Will be calculated in service
+            CreateMap<CreateStoreLocationDto, StoreLocation>();
+            CreateMap<UpdateStoreLocationDto, StoreLocation>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }
