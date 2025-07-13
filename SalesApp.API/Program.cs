@@ -1,13 +1,15 @@
 using System.Text;
 using AutoMapper;
 using CloudinaryDotNet;
+using GoEStores.Services.Interface;
+using GoEStores.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SalesApp.API.Configurations;
-using SalesApp.API.SignalR;
+using SalesApp.BLL.HubRealTime;
 using SalesApp.BLL.Mapping;
 using SalesApp.BLL.Services;
 using SalesApp.DAL.Data;
