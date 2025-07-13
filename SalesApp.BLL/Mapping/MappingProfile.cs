@@ -69,7 +69,7 @@ namespace SalesApp.BLL.Mapping
             .ForMember(dest => dest.SUserId, opt => opt.MapFrom(src => src.SUserId))
             .ForMember(dest => dest.ChatMessages, opt => opt.MapFrom(src => src.ChatMessages));
 
-
+            CreateMap<Notification, NotificationResponse>();
 
 
         }

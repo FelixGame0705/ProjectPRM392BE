@@ -148,6 +148,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sales App API V1");
     c.RoutePrefix = string.Empty; // Set Swagger UI at apps root
 });
+app.MapHub<NotificationHub>("/notificationHub");
 app.MapHub<ChatHubR>("/chathub", options =>
 {
     options.Transports =
