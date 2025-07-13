@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalR Group Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #leaveGroupButton, #sendMessageSection, #control-section {
+            display: none; 
+        }
+
+        /* Modal styles */
+        #loginModal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+
+        #loginForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+            #loginForm input {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 95%;
+                margin: 10px 0;
+                padding: 10px;
+                font-size: 1rem;
+            }
+
+            #loginForm button {
+                display: flex;
+                margin-left: auto;
+            }
+
+        #loginError {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginModal">
+        <div id="loginForm">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Enter username">
+            <input type="password" id="password" placeholder="Enter password">
+            <button id="loginButton">Login</button>
+            <p id="loginError">Invalid username. Please try again.</p>
+        </div>
+    </div>
+
+    <h1>SignalR Group Chat</h1>
+
+    <div id="control-section">
+        <input type="text" id="groupName" placeholder="Enter group name">
+        <button id="joinGroupButton">Join Group</button>
+        <button id="leaveGroupButton">Leave Group</button>
+    </div>
+
+    <div id="messages" style="margin-top: 20px; border: 1px solid #ddd; padding: 10px; max-height: 300px; overflow-y: auto;">
+        <h3>Messages:</h3>
+    </div>
+
+    <div id="sendMessageSection" style="margin-top: 20px;">
+        <input type="text" id="messageInput" placeholder="Enter your message">
+        <button id="sendMessageButton">Send Message</button>
+    </div>
+
+    <script>
+        let isAuthenticated = false; // Track authentication status
+        let username = null; // Track the logged-in user
+        let loggedUser = {};
+        // Function to display login error
+        function showLoginError(message) {
+            const errorElement = document.getElementById("loginError");
+            errorElement.textContent = message;
+            errorElement.style.display = "block";
+        }
+
+        // Function to handle login
+        document.getElementById("loginButton").addEventListener("click", async () => {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim(); // Add a password field to the modal
+
+            if (username === "" || password === "") {
+                showLoginError("Username and password cannot be empty.");
+                return;
+            }
+
+            // Prepare the request payload
+            const loginRequestDTO = {
+                username: username,
+                password: password
+            };
+
+            try {
+                // Call the API endpoint for login
+                const response = await fetch('/api/Auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginRequestDTO)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+
+                    // Check for a successful response
+                    if (result.isSuccess) {
+                        // Store any tokens or user data if necessary
+                        console.log("Login successful:", result.result);
+
+                        // Mark the user as authenticated
+                        isAuthenticated = true;
+                        loggedUser.username = loginRequestDTO.username;
+                        loggedUser.role = result.result.role;
+                        loggedUser.userId = result.result.user.id;
+                        console.log(loggedUser);
+                        // Hide login modal and show chat interface
+                        document.getElementById("loginModal").style.display = "none";
+                        document.getElementById("control-section").style.display = "block";
+
+                        console.log(`User logged in as: ${username}`);
+                    } else {
+                        // Display the error message returned from the API
+                        showLoginError(result.errorMessages[0] || "Login failed.");
+                    }
+                } else if (response.status === 401) {
+                    showLoginError("Unauthorized. Please check your credentials.");
+                } else {
+                    showLoginError("An error occurred while logging in. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error during login:", error);
+                showLoginError("An unexpected error occurred. Please try again.");
+            }
+        });
+
+        document.getElementById("username").addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault(); 
+                document.getElementById("loginButton").click();
+            }
+        });
+
+        document.getElementById("password").addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("loginButton").click();
+            }
+        });
+
+        // Function to add a message to the chat
+        function addMessage(content, isMyMessage = false, isSystemMessage = false, timestamp = null) {
+            const messagesDiv = document.getElementById("messages");
+            const newMessage = document.createElement("div");
+
+            if (isSystemMessage) {
+                // System message styling
+                newMessage.style.color = "grey";
+                newMessage.style.margin = "5px 0";
+                newMessage.style.textAlign = "center";
+                newMessage.style.fontStyle = "italic";
+                newMessage.textContent = content;
+                newMessage.style.fontSize = "14px";
+            } else {
+                // Styled message box
+                newMessage.style.border = "1px solid grey";
+                newMessage.style.backgroundColor = "white";
+                newMessage.style.padding = "10px";
+                newMessage.style.margin = "5px 0";
+                newMessage.style.borderRadius = "5px";
+                newMessage.style.color = isMyMessage ? "black" : "blue"; // Different colors for own and others' messages
+                newMessage.style.position = "relative";
+                newMessage.style.paddingLeft = "10px";
+
+                newMessage.style.wordWrap = "break-word"; // Break words if necessary
+                newMessage.style.wordBreak = "break-word"; // Ensure words break properly
+                newMessage.style.overflowWrap = "break-word"; // Alternative property for older browsers
+
+                // Main content
+                const messageText = document.createElement("span");
+                messageText.textContent = content;
+
+                // Timestamp element
+                const timestampElement = document.createElement("span");
+                const date = timestamp ? new Date(timestamp) : new Date();
+                const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // e.g., "02:15 PM"
+                timestampElement.textContent = ` ${formattedTime}`;
+                timestampElement.style.fontSize = "12px";
+                timestampElement.style.color = "grey";
+                timestampElement.style.marginLeft = "10px";
+                timestampElement.style.float = "right";
+
+                // Append message content and timestamp to the message div
+                newMessage.appendChild(messageText);
+                newMessage.appendChild(timestampElement);
+            }
+
+            messagesDiv.appendChild(newMessage);
+
+            // Scroll to the bottom of the messages div for new messages
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+
+        // Create connection to the SignalR hub
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub") // Replace with your Hub endpoint
+            .build();
+
+        let currentGroup = null; // Track the current group
+
+        connection.on("ReceiveMessage", (userId, message) => {
+            if (userId == loggedUser.userId) {
+                addMessage(message, true, false);
+            } else {
+                addMessage(message, false, false);
+            }
+        });
+
+        connection.on("SystemMessage", (message) => {
+            addMessage(message, false, true);
+        });
+
+        connection.start()
+            .then(() => console.log("Connected to the SignalR hub."))
+            .catch(err => console.error("Error connecting to SignalR hub:", err));
+
+        document.getElementById("joinGroupButton").addEventListener("click", async () => {
+            if (!isAuthenticated) {
+                alert("Please log in first.");
+                return;
+            }
+
+            const groupName = document.getElementById("groupName").value;
+            if (groupName.trim() === "") {
+                alert("Please enter a group name.");
+                return;
+            }
+
+            try {
+                
+                currentGroup = groupName;
+                document.getElementById("leaveGroupButton").style.display = "inline-block";
+                document.getElementById("sendMessageSection").style.display = "block";
+
+
+                // Fetch messages after successful group connection
+                const response = await fetch("/api/Message?groupName=" + groupName); // Replace with your actual API endpoint
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.isSuccess) {
+                        data.result.forEach((message) => {
+                            addMessage(
+                                `@${message.username.split('@')[0]}: ${message.text} `,
+                                message.username == loggedUser.username,
+                                false,
+                                message.timeStamp
+                            );
+                        });
+                    } else {
+                        console.error("Failed to fetch messages:", data.errorMessages);
+                        addMessage("Failed to load messages. Please try again later.", false, true); // System message
+                    }
+                    await connection.invoke("JoinGroup", groupName, loggedUser.username);
+                } else {
+                    console.error("Failed to fetch messages:", response.statusText);
+                    addMessage("Error fetching messages from the server.", false, true); // System message
+                }
+            } catch (err) {
+                console.error("Error joining group:", err);
+                addMessage("Error joining the group. Please try again later.", false, true); // System message
+            }
+        });
+
+        document.getElementById("leaveGroupButton").addEventListener("click", async () => {
+            if (!currentGroup) {
+                alert("You are not part of any group.");
+                return;
+            }
+
+            try {
+                await connection.invoke("LeaveGroup", currentGroup);
+                currentGroup = null;
+                document.getElementById("leaveGroupButton").style.display = "none";
+                document.getElementById("sendMessageSection").style.display = "none";
+            } catch (err) {
+                console.error("Error leaving group:", err);
+            }
+        });
+
+        document.getElementById("sendMessageButton").addEventListener("click", async () => {
+            if (!currentGroup) {
+                alert("You must join a group to send a message.");
+                return;
+            }
+
+            const message = document.getElementById("messageInput").value;
+            if (message.trim() === "") {
+                alert("Please enter a message.");
+                return;
+            }
+
+            try {
+                await connection.invoke("SendMessageToGroup", currentGroup, message, loggedUser.userId);
+                document.getElementById("messageInput").value = "";
+            } catch (err) {
+                console.error("Error sending message:", err);
+            }
+        });
+
+        document.getElementById("messageInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("sendMessageButton").click();
+            }
+        });
+    </script>
+</body>
+</html>

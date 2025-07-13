@@ -1,97 +1,116 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using SalesApp.API.SignalR;
-using SalesApp.BLL.Services;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using GoEStores.Services.Interface;
 using SalesApp.Models.DTOs;
+using GoEStores.Core.Base;
 
-[ApiController]
-[Route("api/[controller]")]
-public class NotificationController : ControllerBase
+namespace SalesApp.API.Controllers
 {
-    private readonly INotificationService _notificationService;
-    private readonly IHubContext<ChatHub, IChatClient> _hubContext;
-    private readonly IUserService _userService;
-    public NotificationController(INotificationService notificationService, IHubContext<ChatHub, IChatClient> hubContext, IUserService userService)
-    {
-        _notificationService = notificationService;
-        _hubContext = hubContext;
-        _userService = userService;
-    }
 
-    // Gửi notification đơn giản tới tất cả client (test SignalR)
-    [HttpPost("broadcast")]
-    public async Task<IActionResult> Broadcast(string message)
-    {
-        await _hubContext.Clients.All.RecieveMessage(message);
-        return NoContent();
-    }
-
-    // Tạo notification và gửi tới client
-    [HttpPost]
-    public async Task<ActionResult> CreateNotification([FromBody] CreateNotificationDto dto)
-    {
-        if (dto == null || string.IsNullOrWhiteSpace(dto.Message) || dto.UserID <= 0)
-            return BadRequest("Invalid data.");
-        var user = await _userService.GetByIdAsync(dto.UserID);
-        if (user == null)
+        [Route("api/notification")]
+        [ApiController]
+        public class NotificationController : ControllerBase
         {
-            return BadRequest("UserID không tồn tại.");
+        private readonly INotificationService _notificationService;
+
+        public NotificationController(INotificationService notificationService)
+        {
+            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllNotifications()
+        {
+            try
+            {
+                var notifications = await _notificationService.GetAllNotificationsAsync();
+                return Ok(notifications);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
-        // Lưu vào DB
-        await _notificationService.CreateNotificationAsync(dto);
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetNotificationById(int id)
+        {
+            try
+            {
+                var notification = await _notificationService.GetNotificationByIdAsync(id);
+                if (notification == null)
+                {
+                    return NotFound($"Notification with ID {id} not found.");
+                }
+                return Ok(notification);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
-        // Gửi real-time (tùy chỉnh theo user nếu muốn)
-        await _hubContext.Clients.All.RecieveMessage(dto.Message);
+        [HttpPost]
+        public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationDto notificationDto)
+        {
+            try
+            {
+                if (notificationDto == null)
+                {
+                    return BadRequest("Notification data is required.");
+                }
+                await _notificationService.CreateNotificationAsync(notificationDto);
+                return Ok("Notification created successfully.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
-        return NoContent();
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateNotification(int id, [FromBody] UpdateNotificationDto notificationDto)
+        {
+            try
+            {
+                if (notificationDto == null)
+                {
+                    return BadRequest("Notification update data is required.");
+                }
+                await _notificationService.UpdateNotificationAsync(id, notificationDto);
+                return Ok($"Notification with ID {id} updated successfully.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteNotification(int id)
+        {
+            try
+            {
+                await _notificationService.DeleteNotificationAsync(id);
+                return Ok($"Notification with ID {id} deleted successfully.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+    }
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<NotificationDto>>> GetAllNotifications()
-    {
-        var notifications = await _notificationService.GetAllNotificationsAsync();
-        return Ok(notifications);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<NotificationDto?>> GetNotificationById(int id)
-    {
-        if (id <= 0) return BadRequest("ID must be greater than 0");
-
-        var notification = await _notificationService.GetNotificationByIdAsync(id);
-        if (notification == null) return NotFound();
-
-        return Ok(notification);
-    }
-
-    [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateNotification(int id, [FromBody] UpdateNotificationDto dto)
-    {
-        if (id <= 0 || dto == null)
-            return BadRequest("Invalid request.");
-
-        var exists = await _notificationService.GetNotificationByIdAsync(id);
-        if (exists == null)
-            return NotFound("Notification not found.");
-
-        await _notificationService.UpdateNotificationAsync(id, dto);
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteNotification(int id)
-    {
-        if (id <= 0)
-            return BadRequest("Invalid ID.");
-
-        var exists = await _notificationService.GetNotificationByIdAsync(id);
-        if (exists == null)
-            return NotFound("Notification not found.");
-
-        await _notificationService.DeleteNotificationAsync(id);
-        return NoContent();
-    }
-
-}

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GoEStores.Repositories.ConfigContext;
+using GoEStores.Repositories.Entity;
+using Microsoft.EntityFrameworkCore;
 using SalesApp.Models.Entities;
 
 namespace SalesApp.DAL.Data
@@ -8,7 +10,7 @@ namespace SalesApp.DAL.Data
         public SalesAppDbContext(DbContextOptions<SalesAppDbContext> options)
             : base(options)
         {
-            base.Database.EnsureCreated();
+            //base.Database.EnsureCreated();
         }
 
         public DbSet<User> Users { get; set; }
@@ -19,17 +21,18 @@ namespace SalesApp.DAL.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<StoreLocation> StoreLocations { get; set; }
+        public DbSet<ChatHub> ChatHubs { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure relationships and constraints here if needed
             modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
-
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+
+            EntityConfig.ApplyAll(modelBuilder);
         }
     }
 }

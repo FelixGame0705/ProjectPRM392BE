@@ -1,4 +1,5 @@
 ﻿using SalesApp.Models.DTOs;
+using SalesApp.Models.Entities;
 
 namespace SalesApp.BLL.Services
 {
@@ -8,5 +9,8 @@ namespace SalesApp.BLL.Services
         Task<UserDto?> GetUserByEmailAsync(string email);
         Task<bool> ValidateUserCredentialsAsync(string username, string password);
         Task<LoginResponseDTO?> LoginAsync(LoginDto loginDto);
+        Task<User> GetCurrentAccountAsync();
+        int GetUserId();
+
     }
 }
