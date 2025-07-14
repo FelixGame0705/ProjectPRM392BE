@@ -15,5 +15,7 @@ namespace SalesApp.BLL.Services
         Task<PaymentResponseDto> HandlePaymentCallbackAsync(PaymentCallbackDto callback);
         Task<bool> VerifyPaymentAsync(string transactionId);
         Task<int?> GetPaymentIdByTransactionAsync(string transactionId);
+        Task<bool> HasCompletedPaymentAsync(int orderId);
+        Task<PaymentDto?> GetCompletedPaymentForOrderAsync(int orderId);
     }
 } 

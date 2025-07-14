@@ -117,5 +117,47 @@ namespace SalesApp.API.Controllers
             var payments = await _paymentService.GetPaymentsByOrderIdAsync(orderId);
             return Ok(payments);
         }
+
+        /// <summary>
+        /// Check if order has completed payment
+        /// </summary>
+        [HttpGet("order/{orderId}/status")]
+        public async Task<ActionResult<object>> CheckOrderPaymentStatus(int orderId)
+        {
+            try
+            {
+                var hasCompletedPayment = await _paymentService.HasCompletedPaymentAsync(orderId);
+                
+                if (hasCompletedPayment)
+                {
+                    var completedPayment = await _paymentService.GetCompletedPaymentForOrderAsync(orderId);
+                    return Ok(new
+                    {
+                        orderId = orderId,
+                        hasCompletedPayment = true,
+                        message = "Order already has a completed payment",
+                        payment = completedPayment
+                    });
+                }
+
+                var allPayments = await _paymentService.GetPaymentsByOrderIdAsync(orderId);
+                return Ok(new
+                {
+                    orderId = orderId,
+                    hasCompletedPayment = false,
+                    message = "Order does not have a completed payment",
+                    allPayments = allPayments
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    orderId = orderId,
+                    hasCompletedPayment = false,
+                    message = $"Error checking payment status: {ex.Message}"
+                });
+            }
+        }
     }
 } 

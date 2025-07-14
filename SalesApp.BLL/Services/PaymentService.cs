@@ -125,6 +125,33 @@ namespace SalesApp.BLL.Services
                     };
                 }
 
+                // Check if order already has a completed payment
+                var existingPayments = await _unitOfWork.Repository<Payment>()
+                    .FindAsync(p => p.OrderID == paymentRequest.OrderID);
+                
+                var completedPayment = existingPayments.FirstOrDefault(p => 
+                    p.PaymentStatus.Equals("Completed", StringComparison.OrdinalIgnoreCase));
+                
+                if (completedPayment != null)
+                {
+                    return new PaymentResponseDto
+                    {
+                        Success = false,
+                        Message = $"Order #{paymentRequest.OrderID} already has a completed payment. Payment ID: {completedPayment.PaymentID}, Amount: {completedPayment.Amount:C}, Date: {completedPayment.PaymentDate:yyyy-MM-dd HH:mm:ss}"
+                    };
+                }
+
+                // Check if order status indicates it's already paid
+                if (order.OrderStatus.Equals("Paid", StringComparison.OrdinalIgnoreCase) ||
+                    order.OrderStatus.Equals("Completed", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new PaymentResponseDto
+                    {
+                        Success = false,
+                        Message = $"Order #{paymentRequest.OrderID} is already in '{order.OrderStatus}' status and cannot be paid again"
+                    };
+                }
+
                 // Get cart total amount
                 var cart = await _unitOfWork.Repository<Cart>().GetByIdAsync(order.CartID.Value);
                 if (cart == null)
@@ -313,6 +340,28 @@ namespace SalesApp.BLL.Services
         public async Task<int?> GetPaymentIdByTransactionAsync(string transactionId)
         {
             return await _transactionMappingService.GetPaymentIdByTransactionAsync(transactionId);
+        }
+
+        public async Task<bool> HasCompletedPaymentAsync(int orderId)
+        {
+            var existingPayments = await _unitOfWork.Repository<Payment>()
+                .FindAsync(p => p.OrderID == orderId);
+            
+            return existingPayments.Any(p => 
+                p.PaymentStatus.Equals("Completed", StringComparison.OrdinalIgnoreCase));
+        }
+
+        public async Task<PaymentDto?> GetCompletedPaymentForOrderAsync(int orderId)
+        {
+            var existingPayments = await _unitOfWork.Repository<Payment>()
+                .FindAsync(p => p.OrderID == orderId);
+            
+            var completedPayment = existingPayments.FirstOrDefault(p => 
+                p.PaymentStatus.Equals("Completed", StringComparison.OrdinalIgnoreCase));
+            
+            if (completedPayment == null) return null;
+            
+            return await MapPaymentWithRelatedDataAsync(completedPayment);
         }
 
         private async Task<PaymentDto> MapPaymentWithRelatedDataAsync(Payment payment)
