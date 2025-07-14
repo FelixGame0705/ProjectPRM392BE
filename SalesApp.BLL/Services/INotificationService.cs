@@ -8,6 +8,8 @@ public interface INotificationService
     Task<IEnumerable<NotificationDto>> GetAllNotificationsAsync();
     Task<NotificationDto?> GetNotificationByIdAsync(int id);
     Task CreateNotificationAsync(CreateNotificationDto notification);
+    Task<IEnumerable<NotificationDto>> GetNotificationByUserIdAsync(int id);
+
     Task UpdateNotificationAsync(int id, UpdateNotificationDto dto);
     Task DeleteNotificationAsync(int id);
 }

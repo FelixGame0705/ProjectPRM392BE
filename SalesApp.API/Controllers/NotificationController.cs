@@ -65,6 +65,14 @@ public class NotificationController : ControllerBase
 
         return Ok(notification);
     }
+    [HttpGet("user/{userId}")]
+    public async Task<ActionResult<IEnumerable<NotificationDto>>> GetNotificationsByUserId(int userId)
+    {
+        if (userId <= 0) return BadRequest("User ID must be greater than 0");
+        var notifications = await _notificationService.GetNotificationByUserIdAsync(userId);
+        if (notifications == null || !notifications.Any()) return NotFound("No notifications found for this user.");
+        return Ok(notifications);
+    }
 
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateNotification(int id, [FromBody] UpdateNotificationDto dto)

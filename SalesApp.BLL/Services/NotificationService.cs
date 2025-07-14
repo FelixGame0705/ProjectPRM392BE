@@ -45,6 +45,16 @@ namespace SalesApp.BLL.Services
             return _mapper.Map<NotificationDto>(await _notificationRepository.GetByIdAsync(id));
         }
 
+        public async Task<IEnumerable<NotificationDto>> GetNotificationByUserIdAsync(int userId)
+        {
+            if (userId <= 0)
+            {
+                throw new ArgumentException("User ID must be greater than zero.", nameof(userId));
+            }
+            var notifications = await _notificationRepository.GetNotificationsByUserIdAsync(userId);
+            return _mapper.Map<IEnumerable<NotificationDto>>(notifications);
+        }
+
         public async Task CreateNotificationAsync(CreateNotificationDto notification)
         {
             if (notification == null)

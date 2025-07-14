@@ -5,10 +5,8 @@ namespace SalesApp.DAL.Repositories
 {
     public interface INotificationRepository : IGenericRepository<Notification>
     {
-        // Task<IEnumerable<Notification>> GetNotificationsByUserIdAsync(string userId);
-        // Task MarkNotificationAsReadAsync(int notificationId);
-        // Task DeleteNotificationAsync(int notificationId);
-        // Task AddNotificationAsync(Notification notification);
+        Task<IEnumerable<Notification>> GetNotificationsByUserIdAsync(int userId);
+
     }
 }
 
