@@ -21,6 +21,8 @@ namespace SalesApp.DAL.UnitOfWork
 
         public IProductRepository ProductRepository { get; private set; }
         public IStoreLocationRepository StoreLocationRepository { get; private set; }
+        public IUserRepository UserRepository { get; private set; }
+
 
         public IGenericRepository<T> Repository<T>() where T : class
         {
