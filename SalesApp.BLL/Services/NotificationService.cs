@@ -67,6 +67,17 @@ namespace SalesApp.BLL.Services
             }
         }
 
+        public async Task<IEnumerable<NotificationDto>> GetNotificationByUserIdAsync(int userId)
+        {
+            if (userId <= 0)
+            {
+                throw new ArgumentException("User ID must be greater than zero.", nameof(userId));
+            }
+            var notifications = await _notificationRepository.GetNotificationsByUserIdAsync(userId);
+            return _mapper.Map<IEnumerable<NotificationDto>>(notifications);
+        }
+
+
         public async Task CreateNotificationAsync(CreateNotificationDto notificationDto)
         {
             try
@@ -93,7 +104,7 @@ namespace SalesApp.BLL.Services
                 await _unitOfWork.SaveChangesAsync();
                 await _unitOfWork.CommitTransactionAsync();
 
-                // G?i th鬾g b醥 qua SignalR
+                // G?i th么ng b谩o qua SignalR
                 await _notificationHubContext.Clients.User(notification.UserID.ToString())
                     .SendAsync("ReceiveNotification", notification.Message);
             }
@@ -121,12 +132,12 @@ namespace SalesApp.BLL.Services
                     throw new KeyNotFoundException($"Notification with ID {id} not found.");
                 }
 
-                _mapper.Map(notificationDto, notification); // 羘h x? ng??c
+                _mapper.Map(notificationDto, notification); // 脕nh x? ng??c
                 _notificationRepository.Update(notification);
                 await _unitOfWork.SaveChangesAsync();
                 await _unitOfWork.CommitTransactionAsync();
 
-                // G?i th鬾g b醥 c?p nh?t (n?u c?n)
+                // G?i th么ng b谩o c?p nh?t (n?u c?n)
                 if (!string.IsNullOrEmpty(notification.Message))
                 {
                     await _notificationHubContext.Clients.User(notification.UserID.ToString())
@@ -156,7 +167,7 @@ namespace SalesApp.BLL.Services
                 await _unitOfWork.SaveChangesAsync();
                 await _unitOfWork.CommitTransactionAsync();
 
-                // G?i th鬾g b醥 x骯 (n?u c?n)
+                // G?i th么ng b谩o x贸a (n?u c?n)
                 await _notificationHubContext.Clients.User(notification.UserID.ToString())
                     .SendAsync("ReceiveNotification", $"Notification {id} deleted.");
             }

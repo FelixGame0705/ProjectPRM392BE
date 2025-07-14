@@ -32,6 +32,15 @@ namespace SalesApp.API.Controllers
             }
         }
 
+    [HttpGet("user/{userId}")]
+    public async Task<ActionResult<IEnumerable<NotificationDto>>> GetNotificationsByUserId(int userId)
+    {
+        if (userId <= 0) return BadRequest("User ID must be greater than 0");
+        var notifications = await _notificationService.GetNotificationByUserIdAsync(userId);
+        if (notifications == null || !notifications.Any()) return NotFound("No notifications found for this user.");
+        return Ok(notifications);
+    }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNotificationById(int id)
         {
