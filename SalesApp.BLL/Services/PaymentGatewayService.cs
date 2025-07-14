@@ -38,10 +38,10 @@ namespace SalesApp.BLL.Services
                 var transactionId = GenerateTransactionId();
                 var createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-                // Use "string" for VNPay sandbox compatibility
-                var returnUrl = string.IsNullOrWhiteSpace(request.ReturnUrl) || 
-                               request.ReturnUrl.Equals("string", StringComparison.OrdinalIgnoreCase) 
-                               ? "string" : "string";
+                // Use callback URL without pre-encoding
+                var baseReturnUrl = string.IsNullOrWhiteSpace(request.ReturnUrl) || 
+                                   request.ReturnUrl.Equals("string", StringComparison.OrdinalIgnoreCase) 
+                                   ? "https://prmbe.felixtien.dev/api/Payments/callback/vnpay" : request.ReturnUrl;
 
                 var vnpayData = new SortedDictionary<string, string>
                 {
@@ -54,24 +54,51 @@ namespace SalesApp.BLL.Services
                     { "vnp_OrderInfo", orderInfo },
                     { "vnp_OrderType", "other" },
                     { "vnp_Locale", request.Language ?? "vn" },
-                    { "vnp_ReturnUrl", returnUrl },
+                    { "vnp_ReturnUrl", baseReturnUrl },
                     { "vnp_IpAddr", "127.0.0.1" },
                     { "vnp_CreateDate", createDate }
                 };
 
-                // Build rawData for hash calculation
+                // Build rawData for hash calculation with consistent encoding
                 var rawData = new StringBuilder();
                 foreach (var item in vnpayData)
                 {
-                    rawData.Append($"{item.Key}={HttpUtility.UrlEncode(item.Value, Encoding.UTF8)}&");
+                    // Use encoding consistent with URL building and callback verification
+                    var encodedValue = HttpUtility.UrlEncode(item.Value, Encoding.UTF8)
+                        .Replace("%3a", "%3A")
+                        .Replace("%2f", "%2F");
+                    rawData.Append($"{item.Key}={encodedValue}&");
                 }
                 rawData.Remove(rawData.Length - 1, 1);
 
-                // Calculate hash
+                // Calculate hash with encoded data
                 var secureHash = CreateVNPaySecureHash(rawData.ToString(), hashSecret);
 
-                // Build payment URL
-                var paymentUrl = $"{baseUrl}?{rawData}&vnp_SecureHash={secureHash}";
+                // Build query string with proper URL encoding
+                var queryString = new StringBuilder();
+                foreach (var item in vnpayData)
+                {
+                    if (queryString.Length > 0)
+                        queryString.Append("&");
+                    
+                    // Special encoding for return URL to match VNPay requirements
+                    if (item.Key == "vnp_ReturnUrl")
+                    {
+                        var encodedValue = HttpUtility.UrlEncode(item.Value, Encoding.UTF8)
+                            .Replace("%3a", "%3A")
+                            .Replace("%2f", "%2F");
+                        queryString.Append($"{item.Key}={encodedValue}");
+                    }
+                    else
+                    {
+                        // Use standard encoding for other parameters
+                        var encodedValue = HttpUtility.UrlEncode(item.Value, Encoding.UTF8);
+                        queryString.Append($"{item.Key}={encodedValue}");
+                    }
+                }
+
+                // Build final payment URL
+                var paymentUrl = $"{baseUrl}?{queryString}&vnp_SecureHash={secureHash}";
 
                 return new PaymentResponseDto
                 {
@@ -192,7 +219,11 @@ namespace SalesApp.BLL.Services
                 var rawData = new StringBuilder();
                 foreach (var item in sortedParams)
                 {
-                    rawData.Append($"{item.Key}={HttpUtility.UrlEncode(item.Value, Encoding.UTF8)}&");
+                    // Use encoding consistent with payment creation
+                    var encodedValue = HttpUtility.UrlEncode(item.Value, Encoding.UTF8)
+                        .Replace("%3a", "%3A")
+                        .Replace("%2f", "%2F");
+                    rawData.Append($"{item.Key}={encodedValue}&");
                 }
                 rawData.Remove(rawData.Length - 1, 1);
 

@@ -41,6 +41,7 @@ namespace SalesApp.API.Controllers
         /// <summary>
         /// VNPay callback endpoint - xử lý kết quả thanh toán từ VNPay
         /// </summary>
+        [HttpGet("callback/vnpay")]
         [HttpPost("callback/vnpay")]
         public async Task<ActionResult<PaymentResponseDto>> HandleVNPayCallback()
         {
